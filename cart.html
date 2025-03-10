@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UrbanTreads | Premium Sneaker Reseller</title>
+    <title>Shopping Cart | UrbanTreads</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="cart.css">
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
 </head>
 <body>
 <!-- Navigation -->
@@ -94,121 +96,152 @@
     </div>
 </nav>
 
-    <!-- Hero Section -->
-    <header class="hero-section">
-        <div class="container h-100 d-flex align-items-center">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h1 class="display-4 fw-bold text-white">Step Into Authenticity</h1>
-                    <p class="lead text-white">Premium verified sneakers from the most sought-after collections.</p>
-                    <a href="product.html" class="btn btn-primary btn-lg mt-3">Shop Now</a>
-                </div>
-            </div>
+    <!-- Page Header -->
+    <header class="page-header py-5 mb-4">
+        <div class="container">
+            <h1 class="display-4">Your Shopping Cart</h1>
+            <p class="lead">Review your items and checkout</p>
         </div>
     </header>
 
-    <!-- Featured Products -->
-    <section class="featured-products py-5">
+    <!-- Cart Content -->
+    <section class="cart-content py-5">
         <div class="container">
-            <h2 class="section-title text-center mb-5">Trending Now</h2>
-            <div class="row g-4" id="featuredProducts">
-                <!-- Products will be loaded from JavaScript -->
-            </div>
-            <div class="text-center mt-5">
-                <a href="product.html" class="btn btn-outline-primary">View All Products</a>
+            <div class="row">
+                <!-- Cart Items -->
+                <div class="col-lg-8 mb-4">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h3 class="mb-0 fw-bold">Cart Items (<span id="cartItemCount">0</span>)</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div id="cartItemsList" class="cart-items-container">
+                                <!-- Cart items will be loaded here -->
+                                <div class="text-center py-5 empty-cart-message">
+                                    <i class="bi bi-cart-x display-1 text-muted"></i>
+                                    <h4 class="mt-3">Your cart is empty</h4>
+                                    <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+                                    <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white py-3">
+                            <div class="d-flex justify-content-between">
+                                <a href="product.html" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left me-2"></i>Continue Shopping
+                                </a>
+                                <button id="updateCartBtn" class="btn btn-outline-primary">
+                                    <i class="bi bi-arrow-repeat me-2"></i>Update Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-header bg-white py-3">
+                            <h3 class="mb-0 fw-bold">Recommended For You</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-4" id="recommendedProducts">
+                                <!-- Recommended products will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary & Checkout -->
+                <div class="col-lg-4">
+                    <div class="card shadow-sm order-summary sticky-top" style="top: 100px; z-index: 10;">
+                        <div class="card-header bg-white py-3">
+                            <h3 class="mb-0 fw-bold">Order Summary</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="promo-code mb-4">
+                                <label for="promoCode" class="form-label">Promo Code</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Enter code" id="promoCode">
+                                    <button class="btn btn-outline-secondary" type="button" id="applyPromo">Apply</button>
+                                </div>
+                                <div id="promoMessage" class="form-text text-success d-none">
+                                    <i class="bi bi-check-circle me-1"></i> Promo code applied!
+                                </div>
+                            </div>
+                            
+                            <div class="order-totals">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Subtotal</span>
+                                    <span id="orderSubtotal">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Shipping</span>
+                                    <span id="orderShipping">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Tax</span>
+                                    <span id="orderTax">$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2 discount-row d-none">
+                                    <span>Discount</span>
+                                    <span id="orderDiscount">-$0.00</span>
+                                </div>
+                                <div class="d-flex justify-content-between mt-3 pt-3 border-top total-row">
+                                    <strong>Total</strong>
+                                    <strong id="orderTotal">$0.00</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 checkout-options">
+                                <button id="checkoutBtn" class="btn btn-primary w-100 mb-3">
+                                    Proceed to Checkout
+                                </button>
+                                <div class="text-center mb-3">- or checkout with -</div>
+                                <div id="paypal-button-container"></div>
+                                <div class="apple-pay-btn mt-3 d-grid">
+                                    <button class="btn btn-dark">
+                                        <i class="bi bi-apple me-2"></i> Apple Pay
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 pt-3 border-top">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-shield-check me-2 text-success"></i>
+                                    <span>Secure Checkout</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="bi bi-truck me-2 text-success"></i>
+                                    <span>Free shipping on orders over $200</span>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-arrow-repeat me-2 text-success"></i>
+                                    <span>14-day returns on unworn items</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Categories -->
-    <section class="categories py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Shop By Category</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="category-card">
-                        <img src="assets/category-lifestyle.jpg" alt="Lifestyle Sneakers" class="img-fluid">
-                        <div class="category-overlay">
-                            <h3>Lifestyle</h3>
-                            <a href="product.html?category=lifestyle" class="btn btn-outline-light">View All</a>
-                        </div>
+    <!-- Order Confirmation Modal -->
+    <div class="modal fade" id="orderConfirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="confirmation-icon mb-4">
+                        <i class="bi bi-check-circle-fill"></i>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="category-card">
-                        <img src="assets/category-basketball.jpg" alt="Basketball Sneakers" class="img-fluid">
-                        <div class="category-overlay">
-                            <h3>Basketball</h3>
-                            <a href="product.html?category=basketball" class="btn btn-outline-light">View All</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="category-card">
-                        <img src="assets/category-limited.jpg" alt="Limited Edition Sneakers" class="img-fluid">
-                        <div class="category-overlay">
-                            <h3>Limited Edition</h3>
-                            <a href="product.html?category=limited" class="btn btn-outline-light">View All</a>
-                        </div>
+                    <h3 class="mb-3">Order Placed Successfully!</h3>
+                    <p>Your order has been received and is being processed. You will receive a confirmation email shortly.</p>
+                    <p class="mb-4"><strong>Order Number:</strong> <span id="confirmationOrderNumber">UT123456789</span></p>
+                    <div class="d-grid">
+                        <a href="home.html" class="btn btn-primary">Continue Shopping</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Why Choose Us -->
-    <section class="why-us py-5">
-        <div class="container">
-            <h2 class="section-title text-center mb-5">Why Choose UrbanTreads</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="feature-card text-center p-4">
-                        <div class="icon-container mb-3">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <h3>100% Authentic</h3>
-                        <p>All our products are verified for authenticity by our expert team.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card text-center p-4">
-                        <div class="icon-container mb-3">
-                            <i class="bi bi-truck"></i>
-                        </div>
-                        <h3>Fast Shipping</h3>
-                        <p>Free express shipping on orders over $200. Delivered within 3 business days.</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="feature-card text-center p-4">
-                        <div class="icon-container mb-3">
-                            <i class="bi bi-arrow-repeat"></i>
-                        </div>
-                        <h3>Easy Returns</h3>
-                        <p>Not satisfied? Return within 14 days for a full refund or exchange.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter -->
-    <section class="newsletter py-5 bg-light">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 text-center">
-                    <h2 class="section-title mb-3">Stay Updated</h2>
-                    <p class="mb-4">Subscribe to our newsletter for exclusive drops and promotions.</p>
-                    <form class="newsletter-form">
-                        <div class="input-group mb-3">
-                            <input type="email" class="form-control" placeholder="Your email address" required>
-                            <button class="btn btn-primary" type="submit">Subscribe</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer py-5">
@@ -271,6 +304,6 @@
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="home.js"></script>
+    <script src="cart.js"></script>
 </body>
 </html>

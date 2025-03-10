@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | UrbanTreads</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="account.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html">
+                <span class="brand-text">UrbanTreads</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="product.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">New Releases</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us</a>
+                    </li>
+                </ul>
+                
+                <!-- Search Bar -->
+                <div class="search-container me-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control search-input" placeholder="Search products..." aria-label="Search">
+                        <button class="btn btn-outline-light search-btn" type="button">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <div class="search-results-dropdown">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center">
+                    <div class="nav-item dropdown me-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="cartDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-cart3"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end p-3 cart-dropdown" aria-labelledby="cartDropdown" style="min-width: 300px;">
+                            <div class="cart-items">
+                                <p class="text-center empty-cart-message">Your cart is empty</p>
+                            </div>
+                            <div class="cart-summary mt-3 pt-3 border-top d-none">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Total:</strong>
+                                    <strong class="cart-total">$0.00</strong>
+                                </div>
+                                <a href="cart.html" class="btn btn-primary w-100 mt-3">View Cart</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="user-container">
+                        <a href="login.html" class="btn login-btn user-not-logged-in">
+                            <i class="bi bi-person"></i> Login
+                        </a>
+                        <div class="dropdown user-logged-in d-none">
+                            <a class="btn user-btn dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/default-avatar.jpg" alt="User" class="user-avatar">
+                                <span class="user-name">User</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="account.html">My Account</a></li>
+                                <li><a class="dropdown-item" href="account.html#orders">My Orders</a></li>
+                                <li><a class="dropdown-item" href="account.html#wishlist">Wishlist</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item logout-btn" href="#">Log Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header py-5 mb-4">
+        <div class="container">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="home.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">My Account</li>
+                </ol>
+            </nav>
+            <h1 class="display-4">My Account</h1>
+            <p class="lead">Manage your profile, orders, and preferences</p>
+        </div>
+    </header>
+
+    <!-- Account Section -->
+    <section class="account-section py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Account Sidebar -->
+                <div class="col-lg-3 mb-4">
+                    <div class="card account-sidebar">
+                        <div class="account-sidebar-header text-center p-4">
+                            <div class="position-relative d-inline-block mb-3">
+                                <img src="assets/default-avatar.jpg" alt="User Avatar" class="user-profile-avatar">
+                                <button class="btn btn-sm btn-light change-avatar-btn" title="Change Avatar">
+                                    <i class="bi bi-camera"></i>
+                                </button>
+                            </div>
+                            <h4 class="user-profile-name mb-1"></h4>
+                            <p class="text-muted user-profile-email mb-0"></p>
+                        </div>
+                        <div class="list-group list-group-flush">
+                            <a href="#profile" class="list-group-item list-group-item-action active" data-bs-toggle="list">
+                                <i class="bi bi-person me-2"></i> Profile
+                            </a>
+                            <a href="#orders" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="bi bi-bag me-2"></i> Orders
+                            </a>
+                            <a href="#wishlist" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="bi bi-heart me-2"></i> Wishlist
+                            </a>
+                            <a href="#addresses" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="bi bi-geo-alt me-2"></i> Addresses
+                            </a>
+                            <a href="#payment-methods" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="bi bi-credit-card me-2"></i> Payment Methods
+                            </a>
+                            <a href="#settings" class="list-group-item list-group-item-action" data-bs-toggle="list">
+                                <i class="bi bi-gear me-2"></i> Settings
+                            </a>
+                            <a href="#" class="list-group-item list-group-item-action text-danger logout-btn">
+                                <i class="bi bi-box-arrow-right me-2"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account Content -->
+                <div class="col-lg-9">
+                    <div class="card account-content">
+                        <div class="card-body p-4">
+                            <div class="tab-content">
+                                <!-- Profile Tab -->
+                                <div class="tab-pane fade show active" id="profile">
+                                    <h3 class="mb-4">Profile Information</h3>
+                                    <form id="profileForm">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6 mb-3 mb-md-0">
+                                                <label for="profileFirstName" class="form-label">First Name</label>
+                                                <input type="text" class="form-control" id="profileFirstName" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="profileLastName" class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" id="profileLastName" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="profileEmail" class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" id="profileEmail" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="profilePhone" class="form-label">Phone Number</label>
+                                            <input type="tel" class="form-control" id="profilePhone">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="profileBirthdate" class="form-label">Birthdate</label>
+                                            <input type="date" class="form-control" id="profileBirthdate">
+                                        </div>
+                                        <hr class="my-4">
+                                        <h5 class="mb-3">Change Password</h5>
+                                        <div class="mb-3">
+                                            <label for="currentPassword" class="form-label">Current Password</label>
+                                            <input type="password" class="form-control" id="currentPassword">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="newPassword" class="form-label">New Password</label>
+                                            <input type="password" class="form-control" id="newPassword">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                                            <input type="password" class="form-control" id="confirmNewPassword">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                                
+                                <!-- Orders Tab -->
+                                <div class="tab-pane fade" id="orders">
+                                    <h3 class="mb-4">My Orders</h3>
+                                    <div class="orders-list" id="ordersList">
+                                        <!-- Orders will be loaded here -->
+                                        <div class="empty-state text-center py-5">
+                                            <i class="bi bi-bag display-1 text-muted"></i>
+                                            <h4 class="mt-3">No orders yet</h4>
+                                            <p class="text-muted">When you place an order, it will appear here</p>
+                                            <a href="product.html" class="btn btn-primary mt-3">Start Shopping</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Wishlist Tab -->
+                                <div class="tab-pane fade" id="wishlist">
+                                    <h3 class="mb-4">My Wishlist</h3>
+                                    <div class="row g-4" id="wishlistItems">
+                                        <!-- Wishlist items will be loaded here -->
+                                        <div class="col-12 empty-state text-center py-5">
+                                            <i class="bi bi-heart display-1 text-muted"></i>
+                                            <h4 class="mt-3">Your wishlist is empty</h4>
+                                            <p class="text-muted">Save items you love to your wishlist</p>
+                                            <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Addresses Tab -->
+                                <div class="tab-pane fade" id="addresses">
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h3 class="mb-0">My Addresses</h3>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                                            <i class="bi bi-plus-lg me-2"></i>Add New Address
+                                        </button>
+                                    </div>
+                                    <div class="row g-4" id="addressesList">
+                                        <!-- Addresses will be loaded here -->
+                                        <div class="col-12 empty-state text-center py-5">
+                                            <i class="bi bi-geo-alt display-1 text-muted"></i>
+                                            <h4 class="mt-3">No addresses saved</h4>
+                                            <p class="text-muted">Add a shipping or billing address</p>
+                                            <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAddressModal">Add Address</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Payment Methods Tab -->
+                                <div class="tab-pane fade" id="payment-methods">
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                        <h3 class="mb-0">Payment Methods</h3>
+                                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPaymentModal">
+                                            <i class="bi bi-plus-lg me-2"></i>Add Payment Method
+                                        </button>
+                                    </div>
+                                    <div class="row g-4" id="paymentMethodsList">
+                                        <!-- Payment methods will be loaded here -->
+                                        <div class="col-12 empty-state text-center py-5">
+                                            <i class="bi bi-credit-card display-1 text-muted"></i>
+                                            <h4 class="mt-3">No payment methods saved</h4>
+                                            <p class="text-muted">Save your payment details for faster checkout</p>
+                                            <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addPaymentModal">Add Payment Method</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Settings Tab -->
+                                <div class="tab-pane fade" id="settings">
+                                    <h3 class="mb-4">Account Settings</h3>
+                                    <form id="settingsForm">
+                                        <div class="mb-4">
+                                            <h5>Notifications</h5>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                                <label class="form-check-label" for="emailNotifications">Email notifications</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="orderUpdates" checked>
+                                                <label class="form-check-label" for="orderUpdates">Order updates</label>
+                                            </div>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="promotionalEmails" checked>
+                                                <label class="form-check-label" for="promotionalEmails">Promotional emails</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="newReleases" checked>
+                                                <label class="form-check-label" for="newReleases">New release notifications</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5>Privacy</h5>
+                                            <div class="form-check form-switch mb-2">
+                                                <input class="form-check-input" type="checkbox" id="activityTracking" checked>
+                                                <label class="form-check-label" for="activityTracking">Allow activity tracking for recommendations</label>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="saveSearchHistory" checked>
+                                                <label class="form-check-label" for="saveSearchHistory">Save search history</label>
+                                            </div>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                                    </form>
+                                    
+                                    <hr class="my-4">
+                                    
+                                    <div class="danger-zone">
+                                        <h5 class="text-danger mb-3">Danger Zone</h5>
+                                        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">Delete Account</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add Address Modal -->
+    <div class="modal fade" id="addAddressModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addressForm">
+                        <div class="mb-3">
+                            <label for="addressName" class="form-label">Address Name</label>
+                            <input type="text" class="form-control" id="addressName" placeholder="Home, Work, etc." required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="addressFirstName" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="addressFirstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="addressLastName" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="addressLastName" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressStreet" class="form-label">Street Address</label>
+                            <input type="text" class="form-control" id="addressStreet" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addressApt" class="form-label">Apartment, suite, etc. (optional)</label>
+                            <input type="text" class="form-control" id="addressApt">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="addressCity" class="form-label">City</label>
+                                <input type="text" class="form-control" id="addressCity" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="addressState" class="form-label">State</label>
+                                <select class="form-select" id="addressState" required>
+                                    <option value="">Select State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <!-- Other states would be here -->
+                                    <option value="WY">Wyoming</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="addressZip" class="form-label">ZIP Code</label>
+                                <input type="text" class="form-control" id="addressZip" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="addressPhone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="addressPhone" required>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="defaultAddress">
+                            <label class="form-check-label" for="defaultAddress">
+                                Set as default address
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save Address</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Payment Method Modal -->
+    <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Payment Method</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentMethodForm">
+                        <div class="mb-3">
+                            <label for="cardName" class="form-label">Name on Card</label>
+                            <input type="text" class="form-control" id="cardName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="cardExpiry" class="form-label">Expiration Date</label>
+                                <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="cardCvc" class="form-label">CVC</label>
+                                <input type="text" class="form-control" id="cardCvc" placeholder="123" required>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="defaultPayment">
+                            <label class="form-check-label" for="defaultPayment">
+                                Set as default payment method
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save Payment Method</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Delete Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <p class="text-danger mb-0">All your data, including order history, saved addresses, and payment methods will be permanently deleted.</p>
+                    <form id="deleteAccountForm" class="mt-4">
+                        <div class="mb-3">
+                            <label for="deleteConfirmPassword" class="form-label">Enter your password to confirm</label>
+                            <input type="password" class="form-control" id="deleteConfirmPassword" required>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">Delete Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h3 class="brand-text mb-4">UrbanTreads</h3>
+                    <p>Your premier destination for authentic, limited-edition sneakers. We connect sneaker enthusiasts with their perfect pair.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#" class="me-2"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4">Shop</h5>
+                    <ul class="footer-links">
+                        <li><a href="product.html">All Products</a></li>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">On Sale</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4">Help</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4">
+                    <h5 class="mb-4">About</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="mb-4">Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Authenticity Guarantee</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row mt-5 pt-4 border-top">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2023 UrbanTreads. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="account.js"></script>
+</body>
+</html>                
