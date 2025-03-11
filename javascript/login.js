@@ -118,7 +118,7 @@ function simulateLogin(email, password, rememberMe) {
         }
         
         // Redirect to home page
-        window.location.href = '../home/home.html';
+        window.location.href = '../html/home.html';
     }, 1500);
 }
 
@@ -322,7 +322,7 @@ function initSearch() {
             
             results.forEach(product => {
                 resultsHTML += `
-                    <a href="product.html?id=${product.id}" class="search-result-item">
+                    <a href="../html/product.html?id=${product.id}" class="search-result-item">
                         <img src="${product.image}" alt="${product.name}" class="search-result-img">
                         <div class="search-result-info">
                             <div class="search-result-title">${product.name}</div>
@@ -427,6 +427,6 @@ function simulateLogin(email, password, rememberMe) {
         localStorage.setItem('user', JSON.stringify(userData));
         
         // Redirect to home page
-        window.location.href = '../home/home.html';
+        window.location.href = '../html/home.html';
     }, 1500);
 }

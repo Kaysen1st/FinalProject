@@ -341,7 +341,7 @@ function initSearch() {
             
             results.forEach(product => {
                 resultsHTML += `
-                    <a href="product.html?id=${product.id}" class="search-result-item">
+                    <a href="../html/product.html?id=${product.id}" class="search-result-item">
                         <img src="${product.image}" alt="${product.name}" class="search-result-img">
                         <div class="search-result-info">
                             <div class="search-result-title">${product.name}</div>
@@ -425,7 +425,7 @@ function initUserMenu() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = 'home.html';
+                window.location.href = '../html/home.html';
             }, 1500);
         });
     }
