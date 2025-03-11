@@ -23,31 +23,31 @@ document.addEventListener('DOMContentLoaded', function() {
 const featuredProducts = [
     {
         id: 1,
-        name: 'Air Jordan 1 Retro High OG',
-        brand: 'Jordan',
-        price: 179.99,
-        image: '../assets/product-1.jpg'
+        name: 'Kobe 6 Protro Sail',
+        brand: 'Nike',
+        price: 165.88,
+        image: '/Assests/Nike/Basketball/Mens/KB6/kb6.jpg'
     },
     {
         id: 2,
-        name: 'Yeezy Boost 350 V2',
+        name: 'Adidas Originals Handball Spezial',
         brand: 'Adidas',
-        price: 249.99,
-        image: '../assets/product-2.jpg'
+        price: 100.00,
+        image: '/Assests/Adidas/Lifestyle/Womens/AHS/ahs.png'
     },
     {
         id: 3,
-        name: 'Nike Dunk Low',
+        name: 'Nike SB Zoom Blazer Mid x Antihero',
         brand: 'Nike',
-        price: 129.99,
-        image: '../assets/product-3.jpg'
+        price: 108.23 ,
+        image: '/Assests/Nike/Lifestyle/Mens/SBZB/sbzb.jpg'
     },
     {
         id: 4,
-        name: 'New Balance 550',
-        brand: 'New Balance',
+        name: 'Anthony Edwards 1 Low',
+        brand: 'Adidas',
         price: 119.99,
-        image: '../assets/product-4.jpg'
+        image: '/Assests/Adidas/Basketball/Mens/AE1/ae1.png'
     }
 ];
 
@@ -180,7 +180,7 @@ function initSearch() {
             name: 'Nike Air Force 1 Low',
             brand: 'Nike',
             price: 109.99,
-            image: '../assets/product-7.jpg',
+            image: '.../Assests/Nike/Lifestyle/AF1L/af1l',
             category: 'Lifestyle'
         },
         {
