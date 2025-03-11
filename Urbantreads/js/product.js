@@ -323,13 +323,18 @@ const products = [
     },
 ];
 
+// Pagination configuration
+const ITEMS_PER_PAGE = 9;
+let currentPage = 1;
+
 // Initialize products
 function initProducts() {
-    renderProducts(products);
+    renderProducts(products, currentPage);
+    initPagination();
 }
 
-// Render products
-function renderProducts(productsToRender) {
+// Render products with pagination
+function renderProducts(productsToRender, page = 1) {
     const productGrid = document.getElementById('productGrid');
     const productCount = document.getElementById('productCount');
     
@@ -347,10 +352,15 @@ function renderProducts(productsToRender) {
         `;
         return;
     }
+
+    // Calculate pagination
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const paginatedProducts = productsToRender.slice(startIndex, endIndex);
     
     let productsHTML = '';
     
-    productsToRender.forEach(product => {
+    paginatedProducts.forEach(product => {
         productsHTML += `
             <div class="col-md-6 col-lg-4">
                 <div class="product-card">
@@ -376,6 +386,57 @@ function renderProducts(productsToRender) {
     
     // Add event listeners to buttons
     addProductButtonListeners();
+}
+
+// Initialize pagination
+function initPagination() {
+    const paginationContainer = document.getElementById('pagination');
+    if (!paginationContainer) return;
+
+    const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+    
+    let paginationHTML = `
+        <nav aria-label="Product navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a>
+                </li>
+    `;
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+            <li class="page-item ${currentPage === i ? 'active' : ''}">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `;
+    }
+
+    paginationHTML += `
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                    <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    `;
+
+    paginationContainer.innerHTML = paginationHTML;
+
+    // Add event listeners to pagination buttons
+    document.querySelectorAll('.pagination .page-link').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newPage = parseInt(this.getAttribute('data-page'));
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderProducts(products, currentPage);
+                initPagination();
+                
+                // Scroll to top of product grid
+                document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
 }
 
 // Add event listeners to product buttons
@@ -511,7 +572,7 @@ function initFilters() {
             });
             
             // Render all products
-            renderProducts(products);
+            renderProducts(products, currentPage);
         });
     }
     
@@ -546,7 +607,7 @@ function initFilters() {
         }
         
         // Render filtered products
-        renderProducts(filteredProducts);
+        renderProducts(filteredProducts, currentPage);
     }
 }
 
@@ -572,7 +633,7 @@ function initSortOptions() {
             // Default is 'featured', no sorting needed
         }
         
-        renderProducts(sortedProducts);
+        renderProducts(sortedProducts, currentPage);
     });
 }
 
