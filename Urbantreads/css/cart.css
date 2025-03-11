@@ -23,14 +23,8 @@ body {
     font-family: var(--body-font);
     line-height: 1.6;
     color: var(--dark-color);
+    background-color: #f8f9fa;
     overflow-x: hidden;
-}
-
-.login-page {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/login-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -67,13 +61,12 @@ a:hover {
 /* Navbar Styles */
 .navbar {
     padding: 1rem 0;
-    background-color: transparent;
+    background-color: var(--dark-color);
     transition: all var(--transition-speed) ease;
 }
 
 .navbar.scrolled {
     padding: 0.5rem 0;
-    background-color: var(--dark-color);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -128,7 +121,147 @@ a:hover {
     align-items: center;
     justify-content: center;
 }
-/* Search Bar Styles - Add to all CSS files */
+
+.login-btn {
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Page Header */
+.page-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/cart-header.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 8rem 0 4rem !important;
+    margin-top: -1px;
+}
+
+/* Cart Styles */
+.cart-items-container {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    transition: background-color var(--transition-speed) ease;
+}
+
+.cart-item:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    width: fit-content;
+}
+
+.quantity-btn {
+    background: none;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.quantity-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.cart-item-quantity {
+    width: 40px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 0.3rem 0;
+}
+
+.cart-item-quantity::-webkit-inner-spin-button,
+.cart-item-quantity::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Order Summary */
+.order-summary {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.total-row {
+    font-size: 1.2rem;
+}
+
+/* PayPal Button */
+#paypal-button-container {
+    max-width: 100%;
+    min-height: 100px;
+}
+
+/* Apple Pay Button */
+.apple-pay-btn .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+/* Recommended Products */
+.product-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: transform var(--transition-speed) ease;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 150px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.product-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.product-brand {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Confirmation Modal */
+.confirmation-icon {
+    font-size: 5rem;
+    color: var(--success-color);
+}
+
+/* Search Bar Styles */
 .search-container {
     position: relative;
     width: 250px;
@@ -229,7 +362,7 @@ a:hover {
     color: var(--gray-color);
 }
 
-/* User Avatar Styles - Add to all CSS files */
+/* User Avatar Styles */
 .user-container {
     position: relative;
 }
@@ -266,59 +399,9 @@ a:hover {
     white-space: nowrap;
 }
 
-@media (max-width: 991.98px) {
-    .search-container {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-}
-
-/* Login Card */
-.login-section {
-    display: flex;
-    align-items: center;
-    min-height: calc(100vh - 76px);
-}
-
-.login-card {
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    border: none;
-}
-
-.password-input-group {
-    position: relative;
-}
-
-.password-toggle {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--gray-color);
-}
-
-.social-login {
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #eee;
-}
-
-.social-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
 /* Footer */
 .footer {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: var(--dark-color);
     color: white;
     padding: 4rem 0 2rem;
 }
@@ -397,14 +480,28 @@ a:hover {
 
 /* Responsive styles */
 @media (max-width: 991.98px) {
-    .login-card {
-        margin: 2rem 0;
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .order-summary {
+        margin-top: 2rem;
+        position: static !important;
+    }
+    
+    .search-container {
+        width: 100%;
+        margin-bottom: 1rem;
     }
 }
 
 @media (max-width: 767.98px) {
-    .login-section {
-        padding: 3rem 0;
+    .page-header {
+        padding: 6rem 0 3rem !important;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
     }
 }
 
@@ -413,11 +510,7 @@ a:hover {
         font-size: 1.5rem;
     }
     
-    .login-card {
-        margin: 1rem 0;
-    }
-    
-    .login-card .card-body {
-        padding: 1.5rem;
+    .page-header h1 {
+        font-size: 1.8rem;
     }
 }

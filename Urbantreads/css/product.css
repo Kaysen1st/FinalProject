@@ -10,6 +10,7 @@
     --light-color: #f8f9fa;
     --gray-color: #6c757d;
     --success-color: #28a745;
+    
     --body-font: 'Poppins', sans-serif;
     --heading-font-weight: 700;
     --transition-speed: 0.3s;
@@ -55,6 +56,11 @@ a:hover {
 .btn-primary:hover {
     background-color: #2a4cbf;
     border-color: #2a4cbf;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--gray-color);
+    color: white;
 }
 
 /* Navbar Styles */
@@ -130,7 +136,128 @@ a:hover {
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
 }
-/* Search Bar Styles - Add to all CSS files */
+
+/* Product Header */
+.product-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/product-header.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 8rem 0 4rem !important;
+    margin-top: -1px;
+}
+
+/* Filter Styles */
+.filter-container {
+    background-color: white;
+    border-radius: var(--border-radius);
+}
+
+.filter-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.size-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+}
+
+.size-btn {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.3rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.size-btn:hover, .size-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Product Card */
+.product-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: transform var(--transition-speed) ease;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 220px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.product-brand {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.product-price {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.quick-view-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.product-card:hover .quick-view-btn {
+    opacity: 1;
+}
+
+/* Quick View Modal */
+.product-gallery {
+    position: relative;
+}
+
+.size-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.size-selection .size-btn {
+    padding: 0.5rem 1rem;
+}
+
+/* Search Bar Styles */
 .search-container {
     position: relative;
     width: 250px;
@@ -231,7 +358,7 @@ a:hover {
     color: var(--gray-color);
 }
 
-/* User Avatar Styles - Add to all CSS files */
+/* User Avatar Styles */
 .user-container {
     position: relative;
 }
@@ -266,142 +393,6 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-}
-
-@media (max-width: 991.98px) {
-    .search-container {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-}
-
-/* Page Header */
-.page-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('assets/cart-header.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 8rem 0 4rem !important;
-    margin-top: -1px;
-}
-
-/* Cart Styles */
-.cart-items-container {
-    max-height: 600px;
-    overflow-y: auto;
-}
-
-.cart-item {
-    transition: background-color var(--transition-speed) ease;
-}
-
-.cart-item:hover {
-    background-color: rgba(0, 0, 0, 0.02);
-}
-
-.quantity-control {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ddd;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    width: fit-content;
-}
-
-.quantity-btn {
-    background: none;
-    border: none;
-    padding: 0.3rem 0.8rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color var(--transition-speed) ease;
-}
-
-.quantity-btn:hover {
-    background-color: #f1f1f1;
-}
-
-.cart-item-quantity {
-    width: 40px;
-    text-align: center;
-    border: none;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    padding: 0.3rem 0;
-}
-
-.cart-item-quantity::-webkit-inner-spin-button,
-.cart-item-quantity::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Order Summary */
-.order-summary {
-    border-radius: var(--border-radius);
-    overflow: hidden;
-}
-
-.total-row {
-    font-size: 1.2rem;
-}
-
-/* PayPal Button */
-#paypal-button-container {
-    max-width: 100%;
-    min-height: 100px;
-}
-
-/* Apple Pay Button */
-.apple-pay-btn .btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-}
-
-/* Recommended Products */
-.product-card {
-    background-color: white;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    transition: transform var(--transition-speed) ease;
-    height: 100%;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-image {
-    height: 150px;
-    object-fit: cover;
-    width: 100%;
-}
-
-.product-title {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-}
-
-.product-brand {
-    color: var(--gray-color);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-}
-
-.product-price {
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--primary-color);
-}
-
-/* Confirmation Modal */
-.confirmation-icon {
-    font-size: 5rem;
-    color: var(--success-color);
 }
 
 /* Footer */
@@ -485,22 +476,22 @@ a:hover {
 
 /* Responsive styles */
 @media (max-width: 991.98px) {
-    .page-header h1 {
+    .product-header h1 {
         font-size: 2.5rem;
     }
     
-    .order-summary {
-        margin-top: 2rem;
-        position: static !important;
+    .search-container {
+        width: 100%;
+        margin-bottom: 1rem;
     }
 }
 
 @media (max-width: 767.98px) {
-    .page-header {
+    .product-header {
         padding: 6rem 0 3rem !important;
     }
     
-    .page-header h1 {
+    .product-header h1 {
         font-size: 2rem;
     }
 }
@@ -510,7 +501,11 @@ a:hover {
         font-size: 1.5rem;
     }
     
-    .page-header h1 {
+    .product-header h1 {
         font-size: 1.8rem;
+    }
+    
+    .size-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
