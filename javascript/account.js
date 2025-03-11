@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.isLoggedIn) {
         // Redirect to login page if not logged in
-        window.location.href = 'login.html';
+        window.location.href = '../login/login.html';
         return;
     }
     
@@ -287,7 +287,7 @@ function initAccountPage() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = 'home.html';
+                window.location.href = '../home/home.html';
             }, 2000);
         });
     }
@@ -306,7 +306,7 @@ function initAccountPage() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = 'home.html';
+                window.location.href = '../home/home.html';
             }, 1500);
         });
     });
@@ -961,7 +961,7 @@ function initUserMenu() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = 'home.html';
+                window.location.href = '../home/home.html';
             }, 1500);
         });
     });

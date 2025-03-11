@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | UrbanTreads</title>
+    <title>UrbanTreads | Premium Sneaker Reseller</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="home.css">
 </head>
-<body class="login-page">
+<body>
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
@@ -27,7 +27,7 @@
                     <a class="nav-link" href="home.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="product.html">Shop</a>
+                    <a class="nav-link" href="../product/product.html">Shop</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">New Releases</a>
@@ -65,14 +65,14 @@
                                 <strong>Total:</strong>
                                 <strong class="cart-total">$0.00</strong>
                             </div>
-                            <a href="cart.html" class="btn btn-primary w-100 mt-3">View Cart</a>
+                            <a href="../cart/cart.html" class="btn btn-primary w-100 mt-3">View Cart</a>
                         </div>
                     </div>
                 </div>
                 
                 <!-- This will change based on login status -->
                 <div class="user-container">
-                    <a href="login.html" class="btn login-btn user-not-logged-in">
+                    <a href="../login/login.html" class="btn login-btn user-not-logged-in">
                         <i class="bi bi-person"></i> Login
                     </a>
                     <div class="dropdown user-logged-in d-none">
@@ -81,9 +81,9 @@
                             <span class="user-name">User</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="account.html">My Account</a></li>
-                            <li><a class="dropdown-item" href="account.html#orders">My Orders</a></li>
-                            <li><a class="dropdown-item" href="account.html#wishlist">Wishlist</a></li>
+                            <li><a class="dropdown-item" href="../account/account.html">My Account</a></li>
+                            <li><a class="dropdown-item" href="../account/account.html#orders">My Orders</a></li>
+                            <li><a class="dropdown-item" href="../account/account.html#wishlist">Wishlist</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item logout-btn" href="#">Log Out</a></li>
                         </ul>
@@ -94,59 +94,61 @@
     </div>
 </nav>
 
-    <!-- Login Section -->
-    <section class="login-section py-5">
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container h-100 d-flex align-items-center">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold text-white">Step Into Authenticity</h1>
+                    <p class="lead text-white">Premium verified sneakers from the most sought-after collections.</p>
+                    <a href="../product/product.html" class="btn btn-primary btn-lg mt-3">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Products -->
+    <section class="featured-products py-5">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-5">
-                    <div class="card login-card shadow">
-                        <div class="card-body p-5">
-                            <h2 class="text-center mb-4">Login to Your Account</h2>
-                            
-                            <form id="loginPageForm">
-                                <div class="mb-3">
-                                    <label for="loginPageEmail" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="loginPageEmail" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="loginPagePassword" class="form-label">Password</label>
-                                    <div class="password-input-group">
-                                        <input type="password" class="form-control" id="loginPagePassword" required>
-                                        <button type="button" class="password-toggle" id="passwordToggle">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="rememberMePage">
-                                        <label class="form-check-label" for="rememberMePage">Remember me</label>
-                                    </div>
-                                    <a href="#" class="forgot-password">Forgot password?</a>
-                                </div>
-                                <div class="d-grid mb-4">
-                                    <button type="submit" class="btn btn-primary">Login</button>
-                                </div>
-                            </form>
-                            
-                            <div class="social-login">
-                                <p class="text-center mb-3">Or login with</p>
-                                <div class="d-flex justify-content-center gap-3">
-                                    <button class="btn btn-outline-secondary social-btn">
-                                        <i class="bi bi-google"></i>
-                                    </button>
-                                    <button class="btn btn-outline-secondary social-btn">
-                                        <i class="bi bi-facebook"></i>
-                                    </button>
-                                    <button class="btn btn-outline-secondary social-btn">
-                                        <i class="bi bi-apple"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <p class="text-center mt-4">
-                                Don't have an account? <a href="#" id="showSignupBtn">Sign up</a>
-                            </p>
+            <h2 class="section-title text-center mb-5">Trending Now</h2>
+            <div class="row g-4" id="featuredProducts">
+                <!-- Products will be loaded from JavaScript -->
+            </div>
+            <div class="text-center mt-5">
+                <a href="../product/product.html" class="btn btn-outline-primary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Shop By Category</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <img src="assets/category-lifestyle.jpg" alt="Lifestyle Sneakers" class="img-fluid">
+                        <div class="category-overlay">
+                            <h3>Lifestyle</h3>
+                            <a href="../product/product.html?category=lifestyle" class="btn btn-outline-light">View All</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <img src="assets/category-basketball.jpg" alt="Basketball Sneakers" class="img-fluid">
+                        <div class="category-overlay">
+                            <h3>Basketball</h3>
+                            <a href="../product/product.html?category=basketball" class="btn btn-outline-light">View All</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="category-card">
+                        <img src="assets/category-limited.jpg" alt="Limited Edition Sneakers" class="img-fluid">
+                        <div class="category-overlay">
+                            <h3>Limited Edition</h3>
+                            <a href="../product/product.html?category=limited" class="btn btn-outline-light">View All</a>
                         </div>
                     </div>
                 </div>
@@ -154,52 +156,59 @@
         </div>
     </section>
 
-    <!-- Signup Modal -->
-    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="signupModalLabel">Create an Account</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <!-- Why Choose Us -->
+    <section class="why-us py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Why Choose UrbanTreads</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="icon-container mb-3">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h3>100% Authentic</h3>
+                        <p>All our products are verified for authenticity by our expert team.</p>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form id="signupForm">
-                        <div class="mb-3">
-                            <label for="signupName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="signupName" required>
+                <div class="col-md-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="icon-container mb-3">
+                            <i class="bi bi-truck"></i>
                         </div>
-                        <div class="mb-3">
-                            <label for="signupEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="signupEmail" required>
+                        <h3>Fast Shipping</h3>
+                        <p>Free express shipping on orders over $200. Delivered within 3 business days.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card text-center p-4">
+                        <div class="icon-container mb-3">
+                            <i class="bi bi-arrow-repeat"></i>
                         </div>
-                        <div class="mb-3">
-                            <label for="signupPassword" class="form-label">Password</label>
-                            <div class="password-input-group">
-                                <input type="password" class="form-control" id="signupPassword" required>
-                                <button type="button" class="password-toggle" id="signupPasswordToggle">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
+                        <h3>Easy Returns</h3>
+                        <p>Not satisfied? Return within 14 days for a full refund or exchange.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter py-5 bg-light">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    <h2 class="section-title mb-3">Stay Updated</h2>
+                    <p class="mb-4">Subscribe to our newsletter for exclusive drops and promotions.</p>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your email address" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
                         </div>
-                        <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Confirm Password</label>
-                            <div class="password-input-group">
-                                <input type="password" class="form-control" id="confirmPassword" required>
-                                <button type="button" class="password-toggle" id="confirmPasswordToggle">
-                                    <i class="bi bi-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="termsAgree" required>
-                            <label class="form-check-label" for="termsAgree">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer class="footer py-5">
@@ -218,7 +227,7 @@
                 <div class="col-lg-2 col-md-4">
                     <h5 class="mb-4">Shop</h5>
                     <ul class="footer-links">
-                        <li><a href="product.html">All Products</a></li>
+                        <li><a href="../product/product.html">All Products</a></li>
                         <li><a href="#">New Arrivals</a></li>
                         <li><a href="#">Best Sellers</a></li>
                         <li><a href="#">On Sale</a></li>
@@ -262,6 +271,6 @@
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
-    <script src="login.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>
