@@ -86,7 +86,7 @@ function initCartPage() {
                     <i class="bi bi-cart-x display-1 text-muted"></i>
                     <h4 class="mt-3">Your cart is empty</h4>
                     <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
-                    <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                    <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
                 </div>
             `;
             
@@ -400,7 +400,7 @@ function initPayPalButtons() {
                             <i class="bi bi-cart-x display-1 text-muted"></i>
                             <h4 class="mt-3">Your cart is empty</h4>
                             <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
-                            <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                            <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
                         </div>
                     `;
                     
@@ -666,7 +666,7 @@ function initSearch() {
             
             results.forEach(product => {
                 resultsHTML += `
-                    <a href="product.html?id=${product.id}" class="search-result-item">
+                    <a href="../html/product.html?id=${product.id}" class="search-result-item">
                         <img src="${product.image}" alt="${product.name}" class="search-result-img">
                         <div class="search-result-info">
                             <div class="search-result-title">${product.name}</div>
@@ -750,7 +750,7 @@ function initUserMenu() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = 'home.html';
+                window.location.href = '../html/home.html';
             }, 1500);
         });
     }

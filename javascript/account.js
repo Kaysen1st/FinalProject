@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.isLoggedIn) {
         // Redirect to login page if not logged in
-        window.location.href = '../login/login.html';
+        window.location.href = '../html/login.html';
         return;
     }
     
@@ -287,7 +287,7 @@ function initAccountPage() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../home/home.html';
+                window.location.href = '../html/home.html';
             }, 2000);
         });
     }
@@ -306,7 +306,7 @@ function initAccountPage() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../home/home.html';
+                window.location.href = '../html/home.html';
             }, 1500);
         });
     });
@@ -365,7 +365,7 @@ function loadOrders() {
                 <i class="bi bi-bag display-1 text-muted"></i>
                 <h4 class="mt-3">No orders yet</h4>
                 <p class="text-muted">When you place an order, it will appear here</p>
-                <a href="product.html" class="btn btn-primary mt-3">Start Shopping</a>
+                <a href="../html/product.html" class="btn btn-primary mt-3">Start Shopping</a>
             </div>
         `;
         return;
@@ -486,7 +486,7 @@ function loadWishlist() {
                 <i class="bi bi-heart display-1 text-muted"></i>
                 <h4 class="mt-3">Your wishlist is empty</h4>
                 <p class="text-muted">Save items you love to your wishlist</p>
-                <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
             </div>
         `;
         return;
@@ -542,7 +542,7 @@ function loadWishlist() {
                         <i class="bi bi-heart display-1 text-muted"></i>
                         <h4 class="mt-3">Your wishlist is empty</h4>
                         <p class="text-muted">Save items you love to your wishlist</p>
-                        <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                        <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
                     </div>
                 `;
             }
@@ -877,7 +877,7 @@ function initSearch() {
             
             results.forEach(product => {
                 resultsHTML += `
-                    <a href="product.html?id=${product.id}" class="search-result-item">
+                    <a href="../html/product.html?id=${product.id}" class="search-result-item">
                         <img src="${product.image}" alt="${product.name}" class="search-result-img">
                         <div class="search-result-info">
                             <div class="search-result-title">${product.name}</div>
@@ -961,7 +961,7 @@ function initUserMenu() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../home/home.html';
+                window.location.href = '../html/home.html';
             }, 1500);
         });
     });
