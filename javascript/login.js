@@ -118,7 +118,7 @@ function simulateLogin(email, password, rememberMe) {
         }
         
         // Redirect to home page
-        window.location.href = 'home.html';
+        window.location.href = '../home/home.html';
     }, 1500);
 }
 
@@ -427,6 +427,6 @@ function simulateLogin(email, password, rememberMe) {
         localStorage.setItem('user', JSON.stringify(userData));
         
         // Redirect to home page
-        window.location.href = 'home.html';
+        window.location.href = '../home/home.html';
     }, 1500);
 }
