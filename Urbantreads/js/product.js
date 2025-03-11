@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize quick view
     initQuickView();
+    
+    // Initialize search functionality
+    initSearch();
+    
+    // Initialize user menu
+    initUserMenu();
 });
 
 // Products data
@@ -26,7 +32,7 @@ const products = [
         name: 'Air Jordan 1 Retro High OG',
         brand: 'Jordan',
         price: 179.99,
-        image: 'assets/product-1.jpg',
+        image: '../assets/product-1.jpg',
         category: 'Basketball',
         condition: 'New',
         description: 'The Air Jordan 1 Retro High OG features a genuine leather upper, Nike Air cushioning and an encapsulated Air-Sole unit for lightweight cushioning.',
@@ -40,7 +46,7 @@ const products = [
         name: 'Yeezy Boost 350 V2',
         brand: 'Adidas',
         price: 249.99,
-        image: 'assets/product-2.jpg',
+        image: '../assets/product-2.jpg',
         category: 'Lifestyle',
         condition: 'New',
         description: 'The Yeezy Boost 350 V2 features an upper composed of re-engineered Primeknit. The post-dyed monofilament side stripe is woven into the upper. Reflective threads are woven into the laces. The midsole utilizes adidas innovative BOOST™ technology.',
@@ -54,7 +60,7 @@ const products = [
         name: 'Nike Dunk Low',
         brand: 'Nike',
         price: 129.99,
-        image: 'assets/product-3.jpg',
+        image: '../assets/product-3.jpg',
         category: 'Lifestyle',
         condition: 'New',
         description: 'The Nike Dunk Low features a low-cut silhouette that combines comfort and style. The padded, low-cut collar allows a full range of motion, while the rubber outsole provides excellent traction.',
@@ -68,7 +74,7 @@ const products = [
         name: 'New Balance 550',
         brand: 'New Balance',
         price: 119.99,
-        image: 'assets/product-4.jpg',
+        image: '../assets/product-4.jpg',
         category: 'Lifestyle',
         condition: 'New',
         description: 'The New Balance 550 is a retro basketball silhouette brought back from the archives. Features a leather upper with perforated details and a cupsole for comfort and durability.',
@@ -82,7 +88,7 @@ const products = [
         name: 'Air Jordan 4 Retro',
         brand: 'Jordan',
         price: 209.99,
-        image: 'assets/product-5.jpg',
+        image: '../assets/product-5.jpg',
         category: 'Basketball',
         condition: 'New',
         description: 'The Air Jordan 4 Retro features a premium leather upper with the iconic visible Air cushioning in the heel for responsive comfort.',
@@ -96,7 +102,7 @@ const products = [
         name: 'Adidas Forum Low',
         brand: 'Adidas',
         price: 99.99,
-        image: 'assets/product-6.jpg',
+        image: '../assets/product-6.jpg',
         category: 'Lifestyle',
         condition: 'New',
         description: 'The adidas Forum Low is a basketball-inspired shoe made with a leather upper and signature ankle strap for a secure fit.',
@@ -110,7 +116,7 @@ const products = [
         name: 'Nike Air Force 1 Low',
         brand: 'Nike',
         price: 109.99,
-        image: 'assets/product-7.jpg',
+        image: '../assets/product-7.jpg',
         category: 'Lifestyle',
         condition: 'New',
         description: 'The Nike Air Force 1 Low is a modern take on the iconic basketball shoe that combines court style with off-court attitude.',
@@ -124,7 +130,7 @@ const products = [
         name: 'Puma Suede Classic',
         brand: 'Puma',
         price: 79.99,
-        image: 'assets/product-8.jpg',
+        image: '../assets/product-8.jpg',
         category: 'Lifestyle',
         condition: 'New',
         description: 'The Puma Suede Classic features a soft suede upper with the iconic Puma Formstrip and a rubber outsole for excellent traction.',
@@ -460,6 +466,131 @@ function openQuickView(product) {
     // Show modal
     const quickViewModal = new bootstrap.Modal(document.getElementById('quickViewModal'));
     quickViewModal.show();
+}
+
+// Initialize search functionality
+function initSearch() {
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const searchResultsDropdown = document.querySelector('.search-results-dropdown');
+    
+    if (!searchInput || !searchBtn || !searchResultsDropdown) return;
+    
+    // Search function
+    function performSearch(query) {
+        if (!query) {
+            searchResultsDropdown.classList.remove('show');
+            return;
+        }
+        
+        // Convert query to lowercase for case-insensitive search
+        query = query.toLowerCase();
+        
+        // Filter products based on search query
+        const results = products.filter(product => 
+            product.name.toLowerCase().includes(query) ||
+            product.brand.toLowerCase().includes(query) ||
+            product.category.toLowerCase().includes(query)
+        );
+        
+        // Render search results
+        if (results.length === 0) {
+            searchResultsDropdown.innerHTML = `
+                <div class="search-message">No results found for "${query}"</div>
+            `;
+        } else {
+            let resultsHTML = '';
+            
+            results.forEach(product => {
+                resultsHTML += `
+                    <a href="product.html?id=${product.id}" class="search-result-item">
+                        <img src="${product.image}" alt="${product.name}" class="search-result-img">
+                        <div class="search-result-info">
+                            <div class="search-result-title">${product.name}</div>
+                            <div class="search-result-brand">${product.brand} | ${product.category}</div>
+                        </div>
+                        <div class="search-result-price">$${product.price.toFixed(2)}</div>
+                    </a>
+                `;
+            });
+            
+            searchResultsDropdown.innerHTML = resultsHTML;
+        }
+        
+        // Show dropdown
+        searchResultsDropdown.classList.add('show');
+    }
+    
+    // Event listeners
+    searchInput.addEventListener('input', function() {
+        performSearch(this.value.trim());
+    });
+    
+    searchBtn.addEventListener('click', function() {
+        performSearch(searchInput.value.trim());
+    });
+    
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput.contains(e.target) && !searchBtn.contains(e.target) && !searchResultsDropdown.contains(e.target)) {
+            searchResultsDropdown.classList.remove('show');
+        }
+    });
+    
+    // Prevent dropdown from closing when clicking inside it
+    searchResultsDropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Handle Enter key press
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch(this.value.trim());
+        }
+    });
+}
+
+// Initialize user menu
+function initUserMenu() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userLoggedInElement = document.querySelector('.user-logged-in');
+    const userNotLoggedInElement = document.querySelector('.user-not-logged-in');
+    const userNameElement = document.querySelector('.user-name');
+    const userAvatarElement = document.querySelector('.user-avatar');
+    
+    if (user && user.isLoggedIn) {
+        // Show logged in menu
+        if (userLoggedInElement) userLoggedInElement.classList.remove('d-none');
+        if (userNotLoggedInElement) userNotLoggedInElement.classList.add('d-none');
+        
+        // Update user name and avatar
+        if (userNameElement) userNameElement.textContent = user.name || 'User';
+        if (userAvatarElement && user.avatar) userAvatarElement.src = user.avatar;
+    } else {
+        // Show not logged in menu
+        if (userLoggedInElement) userLoggedInElement.classList.add('d-none');
+        if (userNotLoggedInElement) userNotLoggedInElement.classList.remove('d-none');
+    }
+    
+    // Handle logout button
+    const logoutBtn = document.querySelector('.logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Clear user data
+            localStorage.removeItem('user');
+            
+            // Show success message
+            showNotification('Logged out successfully');
+            
+            // Redirect to home page after a delay
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 1500);
+        });
+    }
 }
 
 // Cart functionality

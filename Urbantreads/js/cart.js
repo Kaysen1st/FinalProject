@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize navbar scroll effect
     initNavbarScroll();
+    
+    // Initialize search functionality
+    initSearch();
+    
+    // Initialize user menu
+    initUserMenu();
 });
 
 // Cart functionality
@@ -86,7 +92,7 @@ function initCartPage() {
                     <i class="bi bi-cart-x display-1 text-muted"></i>
                     <h4 class="mt-3">Your cart is empty</h4>
                     <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
-                    <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
+                    <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
                 </div>
             `;
             
@@ -294,21 +300,21 @@ function initCartPage() {
                 name: 'Air Jordan 4 Retro',
                 brand: 'Jordan',
                 price: 209.99,
-                image: 'assets/product-5.jpg'
+                image: '../assets/product-5.jpg'
             },
             {
                 id: 6,
                 name: 'Adidas Forum Low',
                 brand: 'Adidas',
                 price: 99.99,
-                image: 'assets/product-6.jpg'
+                image: '../assets/product-6.jpg'
             },
             {
                 id: 8,
                 name: 'Puma Suede Classic',
                 brand: 'Puma',
                 price: 79.99,
-                image: 'assets/product-8.jpg'
+                image: '../assets/product-8.jpg'
             }
         ];
         
@@ -400,7 +406,7 @@ function initPayPalButtons() {
                             <i class="bi bi-cart-x display-1 text-muted"></i>
                             <h4 class="mt-3">Your cart is empty</h4>
                             <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
-                            <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
+                            <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
                         </div>
                     `;
                     
@@ -530,39 +536,6 @@ function initNavbarScroll() {
     });
 }
 
-// Show notification
-function showNotification(message, type = 'success') {
-    // Remove any existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notification => {
-        notification.remove();
-    });
-    
-    // Create new notification
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle'}"></i>
-            <span>${message}</span>
-        </div>
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Show notification
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-    
-    // Hide notification after 3 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
-}
 // Initialize search functionality
 function initSearch() {
     const searchInput = document.querySelector('.search-input');
@@ -578,7 +551,7 @@ function initSearch() {
             name: 'Air Jordan 1 Retro High OG',
             brand: 'Jordan',
             price: 179.99,
-            image: 'assets/product-1.jpg',
+            image: '../assets/product-1.jpg',
             category: 'Basketball'
         },
         {
@@ -586,7 +559,7 @@ function initSearch() {
             name: 'Yeezy Boost 350 V2',
             brand: 'Adidas',
             price: 249.99,
-            image: 'assets/product-2.jpg',
+            image: '../assets/product-2.jpg',
             category: 'Lifestyle'
         },
         {
@@ -594,7 +567,7 @@ function initSearch() {
             name: 'Nike Dunk Low',
             brand: 'Nike',
             price: 129.99,
-            image: 'assets/product-3.jpg',
+            image: '../assets/product-3.jpg',
             category: 'Lifestyle'
         },
         {
@@ -602,7 +575,7 @@ function initSearch() {
             name: 'New Balance 550',
             brand: 'New Balance',
             price: 119.99,
-            image: 'assets/product-4.jpg',
+            image: '../assets/product-4.jpg',
             category: 'Lifestyle'
         },
         {
@@ -610,7 +583,7 @@ function initSearch() {
             name: 'Air Jordan 4 Retro',
             brand: 'Jordan',
             price: 209.99,
-            image: 'assets/product-5.jpg',
+            image: '../assets/product-5.jpg',
             category: 'Basketball'
         },
         {
@@ -618,7 +591,7 @@ function initSearch() {
             name: 'Adidas Forum Low',
             brand: 'Adidas',
             price: 99.99,
-            image: 'assets/product-6.jpg',
+            image: '../assets/product-6.jpg',
             category: 'Lifestyle'
         },
         {
@@ -626,7 +599,7 @@ function initSearch() {
             name: 'Nike Air Force 1 Low',
             brand: 'Nike',
             price: 109.99,
-            image: 'assets/product-7.jpg',
+            image: '../assets/product-7.jpg',
             category: 'Lifestyle'
         },
         {
@@ -634,7 +607,7 @@ function initSearch() {
             name: 'Puma Suede Classic',
             brand: 'Puma',
             price: 79.99,
-            image: 'assets/product-8.jpg',
+            image: '../assets/product-8.jpg',
             category: 'Lifestyle'
         }
     ];
@@ -666,7 +639,7 @@ function initSearch() {
             
             results.forEach(product => {
                 resultsHTML += `
-                    <a href="../html/product.html?id=${product.id}" class="search-result-item">
+                    <a href="product.html?id=${product.id}" class="search-result-item">
                         <img src="${product.image}" alt="${product.name}" class="search-result-img">
                         <div class="search-result-info">
                             <div class="search-result-title">${product.name}</div>
@@ -750,19 +723,42 @@ function initUserMenu() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../html/home.html';
+                window.location.href = 'home.html';
             }, 1500);
         });
     }
 }
 
-// Add these calls to the existing DOMContentLoaded event listener
-document.addEventListener('DOMContentLoaded', function() {
-    // ... existing code ...
+// Show notification
+function showNotification(message, type = 'success') {
+    // Remove any existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => {
+        notification.remove();
+    });
     
-    // Initialize search functionality
-    initSearch();
+    // Create new notification
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="bi ${type === 'success' ? 'bi-check-circle' : 'bi-exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
     
-    // Initialize user menu
-    initUserMenu();
-});
+    document.body.appendChild(notification);
+    
+    // Show notification
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    // Hide notification after 3 seconds
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}

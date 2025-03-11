@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.isLoggedIn) {
         // Redirect to login page if not logged in
-        window.location.href = '../html/login.html';
+        window.location.href = 'login.html';
         return;
     }
     
@@ -287,7 +287,7 @@ function initAccountPage() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../html/home.html';
+                window.location.href = 'home.html';
             }, 2000);
         });
     }
@@ -306,7 +306,7 @@ function initAccountPage() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../html/home.html';
+                window.location.href = 'home.html';
             }, 1500);
         });
     });
@@ -329,14 +329,14 @@ function loadOrders() {
                     id: 1,
                     name: 'Air Jordan 1 Retro High OG',
                     price: 179.99,
-                    image: 'assets/product-1.jpg',
+                    image: '../assets/product-1.jpg',
                     quantity: 1
                 },
                 {
                     id: 3,
                     name: 'Nike Dunk Low',
                     price: 129.99,
-                    image: 'assets/product-3.jpg',
+                    image: '../assets/product-3.jpg',
                     quantity: 1
                 }
             ]
@@ -351,7 +351,7 @@ function loadOrders() {
                     id: 2,
                     name: 'Yeezy Boost 350 V2',
                     price: 249.99,
-                    image: 'assets/product-2.jpg',
+                    image: '../assets/product-2.jpg',
                     quantity: 1
                 }
             ]
@@ -365,7 +365,7 @@ function loadOrders() {
                 <i class="bi bi-bag display-1 text-muted"></i>
                 <h4 class="mt-3">No orders yet</h4>
                 <p class="text-muted">When you place an order, it will appear here</p>
-                <a href="../html/product.html" class="btn btn-primary mt-3">Start Shopping</a>
+                <a href="product.html" class="btn btn-primary mt-3">Start Shopping</a>
             </div>
         `;
         return;
@@ -461,21 +461,21 @@ function loadWishlist() {
             name: 'Air Jordan 4 Retro',
             brand: 'Jordan',
             price: 209.99,
-            image: 'assets/product-5.jpg'
+            image: '../assets/product-5.jpg'
         },
         {
             id: 7,
             name: 'Nike Air Force 1 Low',
             brand: 'Nike',
             price: 109.99,
-            image: 'assets/product-7.jpg'
+            image: '../assets/product-7.jpg'
         },
         {
             id: 8,
             name: 'Puma Suede Classic',
             brand: 'Puma',
             price: 79.99,
-            image: 'assets/product-8.jpg'
+            image: '../assets/product-8.jpg'
         }
     ];
     
@@ -486,7 +486,7 @@ function loadWishlist() {
                 <i class="bi bi-heart display-1 text-muted"></i>
                 <h4 class="mt-3">Your wishlist is empty</h4>
                 <p class="text-muted">Save items you love to your wishlist</p>
-                <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
+                <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
             </div>
         `;
         return;
@@ -542,7 +542,7 @@ function loadWishlist() {
                         <i class="bi bi-heart display-1 text-muted"></i>
                         <h4 class="mt-3">Your wishlist is empty</h4>
                         <p class="text-muted">Save items you love to your wishlist</p>
-                        <a href="../html/product.html" class="btn btn-primary mt-3">Browse Products</a>
+                        <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
                     </div>
                 `;
             }
@@ -789,7 +789,7 @@ function initSearch() {
             name: 'Air Jordan 1 Retro High OG',
             brand: 'Jordan',
             price: 179.99,
-            image: 'assets/product-1.jpg',
+            image: '../assets/product-1.jpg',
             category: 'Basketball'
         },
         {
@@ -797,7 +797,7 @@ function initSearch() {
             name: 'Yeezy Boost 350 V2',
             brand: 'Adidas',
             price: 249.99,
-            image: 'assets/product-2.jpg',
+            image: '../assets/product-2.jpg',
             category: 'Lifestyle'
         },
         {
@@ -805,7 +805,7 @@ function initSearch() {
             name: 'Nike Dunk Low',
             brand: 'Nike',
             price: 129.99,
-            image: 'assets/product-3.jpg',
+            image: '../assets/product-3.jpg',
             category: 'Lifestyle'
         },
         {
@@ -813,7 +813,7 @@ function initSearch() {
             name: 'New Balance 550',
             brand: 'New Balance',
             price: 119.99,
-            image: 'assets/product-4.jpg',
+            image: '../assets/product-4.jpg',
             category: 'Lifestyle'
         },
         {
@@ -821,7 +821,7 @@ function initSearch() {
             name: 'Air Jordan 4 Retro',
             brand: 'Jordan',
             price: 209.99,
-            image: 'assets/product-5.jpg',
+            image: '../assets/product-5.jpg',
             category: 'Basketball'
         },
         {
@@ -829,7 +829,7 @@ function initSearch() {
             name: 'Adidas Forum Low',
             brand: 'Adidas',
             price: 99.99,
-            image: 'assets/product-6.jpg',
+            image: '../assets/product-6.jpg',
             category: 'Lifestyle'
         },
         {
@@ -837,7 +837,7 @@ function initSearch() {
             name: 'Nike Air Force 1 Low',
             brand: 'Nike',
             price: 109.99,
-            image: 'assets/product-7.jpg',
+            image: '../assets/product-7.jpg',
             category: 'Lifestyle'
         },
         {
@@ -845,7 +845,7 @@ function initSearch() {
             name: 'Puma Suede Classic',
             brand: 'Puma',
             price: 79.99,
-            image: 'assets/product-8.jpg',
+            image: '../assets/product-8.jpg',
             category: 'Lifestyle'
         }
     ];
@@ -877,7 +877,7 @@ function initSearch() {
             
             results.forEach(product => {
                 resultsHTML += `
-                    <a href="../html/product.html?id=${product.id}" class="search-result-item">
+                    <a href="product.html?id=${product.id}" class="search-result-item">
                         <img src="${product.image}" alt="${product.name}" class="search-result-img">
                         <div class="search-result-info">
                             <div class="search-result-title">${product.name}</div>
@@ -961,7 +961,7 @@ function initUserMenu() {
             
             // Redirect to home page after a delay
             setTimeout(() => {
-                window.location.href = '../html/home.html';
+                window.location.href = 'home.html';
             }, 1500);
         });
     });
@@ -993,7 +993,7 @@ function loadCart() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
     
     // Update cart count
-    cartCount.textContent = cart.length;
+    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
     
     // Update cart dropdown
     if (cart.length === 0) {
