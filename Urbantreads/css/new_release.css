@@ -1,0 +1,74 @@
+/* New Releases Specific Styles */
+.new-releases {
+    padding: 4rem 0;
+}
+.brand-logo {
+    height: 80px;
+    width: 120px;
+    vertical-align: middle;
+}
+
+/* For smaller screens */
+@media (max-width: 576px) {
+    .brand-logo {
+        height: 30px;
+    }
+}
+.product-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: transform var(--transition-speed) ease;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.product-brand {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+}
+
+.product-price {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* Newsletter Section */
+.newsletter {
+    background-color: #f8f9fa;
+}
+
+.newsletter-form .input-group {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Responsive styles */
+@media (max-width: 767.98px) {
+    .product-card {
+        margin-bottom: 1.5rem;
+    }
+}

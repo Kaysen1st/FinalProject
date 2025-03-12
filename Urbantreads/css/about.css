@@ -2,7 +2,18 @@
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 }
+.brand-logo {
+    height: 80px;
+    width: 120px;
+    vertical-align: middle;
+}
 
+/* For smaller screens */
+@media (max-width: 576px) {
+    .brand-logo {
+        height: 30px;
+    }
+}
 .modal-title {
     font-size: 1.5rem;
     font-weight: var(--heading-font-weight);
