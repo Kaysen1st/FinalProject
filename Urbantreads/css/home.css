@@ -462,7 +462,7 @@ a:hover {
     background-color: white;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    z-index: 1000;
+    z-index: 1500;
     max-height: 400px;
     overflow-y: auto;
     display: none;
