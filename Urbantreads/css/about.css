@@ -1,0 +1,15 @@
+.modal-content {
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: var(--heading-font-weight);
+    color: var(--dark-color);
+}
+
+.modal-body a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
