@@ -325,12 +325,7 @@ a:hover {
     text-align: center;
     color: var(--gray-color);
 }
-  /* Adjust Search Container */
-  .search-container {
-    position: relative;
-    /* Ensure the search bar fits well within its column */
-    width: 100%;
-  }
+
 
 /* Footer */
 .footer {

@@ -902,7 +902,7 @@ function updateCartUI() {
     } else {
         let cartItemsHTML = '';
         
-        cart.forEach((item, index) => {
+        cart.forEach((item) => {
             cartItemsHTML += `
                 <div class="cart-item">
                     <img src="${item.image}" alt="${item.name}" class="cart-item-img">
