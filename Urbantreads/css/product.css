@@ -139,7 +139,7 @@ a:hover {
 
 /* Product Header */
 .product-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/product-header.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/Assests/nike banner.jpg');
     background-size: cover;
     background-position: center;
     color: white;
