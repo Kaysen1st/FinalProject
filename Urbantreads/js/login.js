@@ -9,6 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
     const showRegisterBtn = document.getElementById('showRegisterBtn');
     const showLoginBtn = document.getElementById('showLoginBtn');
     
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-password').forEach(button => {
+        button.addEventListener('click', function() {
+            const input = this.closest('.input-group').querySelector('input');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('bi-eye');
+                icon.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('bi-eye-slash');
+                icon.classList.add('bi-eye');
+            }
+        });
+    });
+    
     // Show registration form
     if (showRegisterBtn) {
         showRegisterBtn.addEventListener('click', function(e) {
@@ -55,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
+            const accountType = document.querySelector('input[name="accountType"]:checked').value;
             
             // Validate registration
             if (!validateRegistrationForm(name, email, password, confirmPassword)) {
@@ -62,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Process registration
-            processRegistration(name, email, password);
+            processRegistration(name, email, password, accountType);
         });
     }
 });
@@ -147,7 +166,8 @@ function processLogin(email, password, rememberMe) {
             email: email,
             isLoggedIn: true,
             firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-            lastName: ''
+            lastName: '',
+            showSaleBanner: true // Flag to show the sale banner
         };
         
         // Save user data to localStorage
@@ -159,7 +179,7 @@ function processLogin(email, password, rememberMe) {
 }
 
 // Process registration
-function processRegistration(name, email, password) {
+function processRegistration(name, email, password, accountType) {
     // In a real application, this would be an API call to your backend
     // For this demo, we'll simulate a successful registration
     
@@ -176,7 +196,8 @@ function processRegistration(name, email, password) {
             email: email,
             isLoggedIn: true,
             firstName: name.split(' ')[0],
-            lastName: name.split(' ').slice(1).join(' ')
+            lastName: name.split(' ').slice(1).join(' '),
+            accountType: accountType
         };
         
         // Save user data to localStorage
@@ -217,3 +238,57 @@ function showNotification(message, type = 'success') {
         }, 300);
     }, 3000);
 }
+// Function to show sale popup banner
+function showSaleBanner() {
+    console.log("Attempting to show sale banner");
+    
+    // Check if elements exist
+    const popupOverlay = document.getElementById('popupOverlay');
+    const salePopup = document.getElementById('salePopup');
+    
+    if (!popupOverlay || !salePopup) {
+        console.error("Sale popup elements not found in the DOM");
+        return;
+    }
+    
+    // Show the popup and overlay
+    popupOverlay.style.display = 'block';
+    salePopup.style.display = 'block';
+    
+    // Add close functionality
+    const closePopup = document.getElementById('closePopup');
+    if (closePopup) {
+        closePopup.addEventListener('click', function() {
+            popupOverlay.style.animation = 'fadeOut 0.3s ease-in-out';
+            salePopup.style.animation = 'fadeOut 0.3s ease-in-out';
+            
+            setTimeout(() => {
+                popupOverlay.style.display = 'none';
+                salePopup.style.display = 'none';
+                popupOverlay.style.animation = '';
+                salePopup.style.animation = '';
+            }, 300);
+        });
+    }
+    
+    // Close when clicking on overlay
+    popupOverlay.addEventListener('click', function() {
+        if (closePopup) closePopup.click();
+    });
+}
+
+// Add this to your DOMContentLoaded event or call it at the end of the file
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user just logged in
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.showSaleBanner) {
+        console.log("User qualifies for sale banner");
+        
+        // Show banner after a short delay
+        setTimeout(showSaleBanner, 1000);
+        
+        // Update user data to not show the banner again
+        user.showSaleBanner = false;
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+});

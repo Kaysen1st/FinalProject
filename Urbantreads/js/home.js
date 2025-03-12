@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize user menu
     initUserMenu();
+    
 });
 
 // Featured products data
@@ -452,4 +453,68 @@ function showNotification(message, type = 'success') {
             notification.remove();
         }, 300);
     }, 3000);
+}
+// Function to show sale popup banner
+function showSaleBanner() {
+    console.log("Showing sale banner");
+    
+    // Check if elements exist
+    const popupOverlay = document.getElementById('popupOverlay');
+    const salePopup = document.getElementById('salePopup');
+    const closePopupBtn = document.getElementById('closePopup');
+    
+    if (!popupOverlay || !salePopup || !closePopupBtn) {
+        console.error("Sale popup elements not found in the DOM");
+        return;
+    }
+    
+    // Show the popup and overlay
+    popupOverlay.style.display = 'block';
+    salePopup.style.display = 'block';
+    
+    // Function to close the popup
+    function closePopup() {
+        console.log("Closing popup");
+        popupOverlay.style.display = 'none';
+        salePopup.style.display = 'none';
+    }
+    
+    // Add close functionality
+    closePopupBtn.onclick = closePopup;
+    
+    // Close when clicking on overlay
+    popupOverlay.onclick = closePopup;
+}
+
+// Check for user login status when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if user just logged in
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user && user.showSaleBanner) {
+        console.log("User qualifies for sale banner");
+        
+        // Show banner after a short delay
+        setTimeout(showSaleBanner, 1000);
+        
+        // Update user data to not show the banner again
+        user.showSaleBanner = false;
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+    
+    // Ensure close button works even if added later
+    document.body.addEventListener('click', function(e) {
+        if (e.target.id === 'closePopup' || e.target.closest('#closePopup')) {
+            console.log("Close button clicked");
+            const popupOverlay = document.getElementById('popupOverlay');
+            const salePopup = document.getElementById('salePopup');
+            
+            if (popupOverlay) popupOverlay.style.display = 'none';
+            if (salePopup) salePopup.style.display = 'none';
+        }
+    });
+});
+
+// For testing - you can call this function from the browser console
+function testSaleBanner() {
+    showSaleBanner();
 }
