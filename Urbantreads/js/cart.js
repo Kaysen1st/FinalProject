@@ -300,7 +300,7 @@ function initCartPage() {
                 name: 'Adidas Harden Vol. 9 "Cyber Metallic" ',
                 brand: 'Adidas',
                 price: 160.00,
-                image: '/Assests/Adidas/Basketball/Mens/AE1/ae1.png',
+                image: '/Assests/Adidas/Basketball/Mens/AH9/ah9.png',
             },
             {
                 id: 17,
