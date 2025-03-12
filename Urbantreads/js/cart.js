@@ -296,25 +296,25 @@ function initCartPage() {
         // Sample recommended products
         const recommendedProducts = [
             {
-                id: 5,
-                name: 'Air Jordan 4 Retro',
-                brand: 'Jordan',
-                price: 209.99,
-                image: '../assets/product-5.jpg'
-            },
-            {
-                id: 6,
-                name: 'Adidas Forum Low',
+                id: 19,
+                name: 'Adidas Harden Vol. 9 "Cyber Metallic" ',
                 brand: 'Adidas',
-                price: 99.99,
-                image: '../assets/product-6.jpg'
+                price: 160.00,
+                image: '/Assests/Adidas/Basketball/Mens/AE1/ae1.png',
             },
             {
-                id: 8,
-                name: 'Puma Suede Classic',
-                brand: 'Puma',
-                price: 79.99,
-                image: '../assets/product-8.jpg'
+                id: 17,
+                name: 'Adidas UltraBOOST 1.0',
+                brand: 'Adidas',
+                price: 200.00,
+                image: '/Assests/Adidas/Running/Womens/AUB/aub.png',
+            },
+            {
+                id: 12,
+                name: 'Air Force 1 "07',
+                brand: 'Nike',
+                price: 132.69,
+                image: '/Assests/Nike/Lifestyle/Womens/WAF1/waf1.jpg',
             }
         ];
         

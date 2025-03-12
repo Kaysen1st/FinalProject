@@ -189,7 +189,7 @@ a:hover {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/hero-bg.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Assests/nike banner.jpg');
     background-size: cover;
     background-position: center;
     height: 100vh;
