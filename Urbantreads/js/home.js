@@ -91,8 +91,24 @@ function initFeaturedProducts() {
 
 // Initialize navbar scroll effect
 function initNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    // Add active class to current page link
+    const currentPath = window.location.pathname;
+    const navLinks = navbar.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPath || 
+            (currentPath.endsWith('/') && href === currentPath.slice(0, -1)) ||
+            (!currentPath.endsWith('/') && href === currentPath + '/')) {
+            link.classList.add('active');
+        }
+    });
+
+    // Add scroll effect
     window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
