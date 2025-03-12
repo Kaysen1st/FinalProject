@@ -101,6 +101,18 @@
     background-color: var(--primary-color);
     border-color: var(--primary-color);
 }
+.brand-logo {
+    height: 40px;
+    width: auto;
+    vertical-align: middle;
+}
+
+/* For smaller screens */
+@media (max-width: 576px) {
+    .brand-logo {
+        height: 30px;
+    }
+}
 
 /* Account Content */
 .account-content {

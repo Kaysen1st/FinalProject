@@ -572,7 +572,9 @@ function initFilters() {
             });
             
             // Render all products
+            currentPage = 1;
             renderProducts(products, currentPage);
+            initPagination();
         });
     }
     
@@ -606,8 +608,152 @@ function initFilters() {
             );
         }
         
+        // Reset to first page when filtering
+        currentPage = 1;
+        
         // Render filtered products
         renderProducts(filteredProducts, currentPage);
+        
+        // Update pagination for filtered products
+        updatePagination(filteredProducts);
+    }
+}
+
+// Update pagination based on filtered products
+function updatePagination(filteredProducts) {
+    const paginationContainer = document.getElementById('pagination');
+    if (!paginationContainer) return;
+
+    const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+    
+    let paginationHTML = `
+        <nav aria-label="Product navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" data-page="${currentPage - 1}">Previous</a>
+                </li>
+    `;
+
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `
+            <li class="page-item ${currentPage === i ? 'active' : ''}">
+                <a class="page-link" href="#" data-page="${i}">${i}</a>
+            </li>
+        `;
+    }
+
+    paginationHTML += `
+                <li class="page-item ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}">
+                    <a class="page-link" href="#" data-page="${currentPage + 1}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    `;
+
+    paginationContainer.innerHTML = paginationHTML;
+
+    // Add event listeners to pagination buttons
+    document.querySelectorAll('.pagination .page-link').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const newPage = parseInt(this.getAttribute('data-page'));
+            
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                renderProducts(filteredProducts, currentPage);
+                updatePagination(filteredProducts);
+                
+                // Scroll to top of product grid
+                document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+}
+
+// Initialize sort options
+function initSortOptions() {
+    const sortSelect = document.getElementById('sortSelect');
+    if (!sortSelect) return;
+    
+    sortSelect.addEventListener('change', function() {
+        const sortValue = this.value;
+        let sortedProducts = [...products];
+        
+        switch (sortValue) {
+            case 'price-low':
+                sortedProducts.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-high':
+                sortedProducts.sort((a, b) => b.price - a.price);
+                break;
+            case 'newest':
+                sortedProducts.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+                break;
+            // Default is 'featured', no sorting needed
+        }
+        
+        // Reset to first page when sorting
+        currentPage = 1;
+        
+        // Apply any active filters to the sorted products
+        applyActiveFilters(sortedProducts);
+    });
+    
+    // Function to apply active filters to sorted products
+    function applyActiveFilters(sortedProducts) {
+        let filteredProducts = [...sortedProducts];
+        
+        // Get active brand filters
+        const activeBrands = [];
+        document.querySelectorAll('.filter-brand:checked').forEach(checkbox => {
+            activeBrands.push(checkbox.value);
+        });
+        
+        // Get active category filters
+        const activeCategories = [];
+        document.querySelectorAll('.filter-category:checked').forEach(checkbox => {
+            activeCategories.push(checkbox.value);
+        });
+        
+        // Get active price filter
+        const maxPrice = parseInt(document.getElementById('priceRange').value);
+        
+        // Get active size filter
+        let activeSize = null;
+        const activeSizeBtn = document.querySelector('.size-btn.active');
+        if (activeSizeBtn) {
+            activeSize = parseFloat(activeSizeBtn.getAttribute('data-size'));
+        }
+        
+        // Apply brand filter
+        if (activeBrands.length > 0) {
+            filteredProducts = filteredProducts.filter(product => 
+                activeBrands.includes(product.brand)
+            );
+        }
+        
+        // Apply category filter
+        if (activeCategories.length > 0) {
+            filteredProducts = filteredProducts.filter(product => 
+                activeCategories.includes(product.category)
+            );
+        }
+        
+        // Apply price filter
+        filteredProducts = filteredProducts.filter(product => 
+            product.price <= maxPrice
+        );
+        
+        // Apply size filter
+        if (activeSize) {
+            filteredProducts = filteredProducts.filter(product => 
+                product.sizes.includes(activeSize)
+            );
+        }
+        
+        // Render filtered and sorted products
+        renderProducts(filteredProducts, currentPage);
+        updatePagination(filteredProducts);
     }
 }
 

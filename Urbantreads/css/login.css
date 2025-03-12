@@ -319,7 +319,18 @@ a:hover {
     color: var(--primary-color);
     font-size: 0.9rem;
 }
+.brand-logo {
+    height: 40px;
+    width: auto;
+    vertical-align: middle;
+}
 
+/* For smaller screens */
+@media (max-width: 576px) {
+    .brand-logo {
+        height: 30px;
+    }
+}
 .search-message {
     padding: 1rem;
     text-align: center;

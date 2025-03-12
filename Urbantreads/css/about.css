@@ -13,3 +13,15 @@
     color: var(--primary-color);
     text-decoration: underline;
 }
+.brand-logo {
+    height: 40px;
+    width: auto;
+    vertical-align: middle;
+}
+
+/* For smaller screens */
+@media (max-width: 576px) {
+    .brand-logo {
+        height: 30px;
+    }
+}
