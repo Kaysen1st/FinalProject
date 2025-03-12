@@ -575,10 +575,10 @@ a:hover {
     z-index: 500;
   }
   
+  /* need this */
   /* Adjust Search Container */
   .search-container {
     position: relative;
-    /* Ensure the search bar fits well within its column */
     width: 100%;
   }
   
