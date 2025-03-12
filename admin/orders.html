@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanTreads Admin | Orders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" id="admin-container">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h3>UrbanTreads</h3>
+                    <p>Admin Panel</p>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="products.html">
+                            <i class="bi bi-box-seam"></i> Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="orders.html">
+                            <i class="bi bi-bag"></i> Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="customers.html">
+                            <i class="bi bi-people"></i> Customers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analytics.html">
+                            <i class="bi bi-graph-up"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item mt-auto">
+                        <a class="nav-link" href="settings.html">
+                            <i class="bi bi-gear"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link logout-btn" href="#">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Top Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler sidebar-toggler" type="button">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown">
+                                <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="adminDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://via.placeholder.com/40" alt="Admin" width="32" height="32" class="rounded-circle me-2">
+                                    <span class="admin-name">Admin User</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end text-small shadow" aria-labelledby="adminDropdown">
+                                    <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                                    <li><a class="dropdown-item" href="settings.html#profile">Profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item logout-btn" href="#">Sign out</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                
+                <!-- Orders Content -->
+                <div class="container-fluid p-4">
+                    <div class="row mb-4">
+                        <div class="col-12 d-flex justify-content-between align-items-center">
+                            <h2>Order Management</h2>
+                            <div>
+                                <button class="btn btn-outline-primary me-2" id="exportOrders">
+                                    <i class="bi bi-download me-2"></i>Export Orders
+                                </button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createOrderModal">
+                                    <i class="bi bi-plus-lg me-2"></i>Create Order
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Stats -->
+                    <div class="row mb-4">
+                        <div class="col-md-3 mb-4 mb-md-0">
+                            <div class="card order-stat-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">New Orders</h6>
+                                            <h3 class="mb-0 new-orders-count">0</h3>
+                                        </div>
+                                        <div class="order-stat-icon bg-primary-light">
+                                            <i class="bi bi-bag-plus text-primary"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4 mb-md-0">
+                            <div class="card order-stat-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Processing</h6>
+                                            <h3 class="mb-0 processing-orders-count">0</h3>
+                                        </div>
+                                        <div class="order-stat-icon bg-warning-light">
+                                            <i class="bi bi-gear text-warning"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4 mb-md-0">
+                            <div class="card order-stat-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Shipped</h6>
+                                            <h3 class="mb-0 shipped-orders-count">0</h3>
+                                        </div>
+                                        <div class="order-stat-icon bg-info-light">
+                                            <i class="bi bi-truck text-info"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card order-stat-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h6 class="text-muted mb-2">Delivered</h6>
+                                            <h3 class="mb-0 delivered-orders-count">0</h3>
+                                        </div>
+                                        <div class="order-stat-icon bg-success-light">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Order Filters -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                                <input type="text" class="form-control" id="orderSearch" placeholder="Search by order ID or customer...">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" id="statusFilter">
+                                                <option value="">All Statuses</option>
+                                                <option value="new">New</option>
+                                                <option value="processing">Processing</option>
+                                                <option value="shipped">Shipped</option>
+                                                <option value="delivered">Delivered</option>
+                                                <option value="cancelled">Cancelled</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" id="dateRangeFilter">
+                                                <option value="">All Time</option>
+                                                <option value="today">Today</option>
+                                                <option value="yesterday">Yesterday</option>
+                                                <option value="week">This Week</option>
+                                                <option value="month">This Month</option>
+                                                <option value="custom">Custom Range</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 custom-date-range d-none">
+                                            <div class="input-group">
+                                                <input type="date" class="form-control" id="startDate">
+                                                <span class="input-group-text">to</span>
+                                                <input type="date" class="form-control" id="endDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button class="btn btn-outline-secondary w-100" id="resetOrderFilters">
+                                                <i class="bi bi-arrow-repeat"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Table -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-white">
+                                    <h5 class="mb-0">All Orders</h5>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover align-middle">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order ID</th>
+                                                    <th>Customer</th>
+                                                    <th>Date</th>
+                                                    <th>Items</th>
+                                                    <th>Total</th>
+                                                    <th>Status</th>
+                                                    <th>Payment</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ordersTable">
+                                                <!-- Orders will be loaded here -->
+                                                <tr>
+                                                    <td colspan="8" class="text-center py-4">Loading orders...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-white">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <span id="orderCount">0</span> orders
+                                        </div>
+                                        <nav aria-label="Orders pagination">
+                                            <ul class="pagination mb-0">
+                                                <li class="page-item disabled">
+                                                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                                                </li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#">Next</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Details Modal -->
+    <div class="modal fade" id="orderDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>Order Information</h6>
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>Order ID:</th>
+                                    <td id="detailsOrderId"></td>
+                                </tr>
+                                <tr>
+                                    <th>Date:</th>
+                                    <td id="detailsOrderDate"></td>
+                                </tr>
+                                <tr>
+                                    <th>Status:</th>
+                                    <td id="detailsOrderStatus"></td>
+                                </tr>
+                                <tr>
+                                    <th>Payment Method:</th>
+                                    <td id="detailsOrderPayment"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Customer Information</h6>
+                            <table class="table table-sm">
+                                <tr>
+                                    <th>Name:</th>
+                                    <td id="detailsCustomerName"></td>
+                                </tr>
+                                <tr>
+                                    <th>Email:</th>
+                                    <td id="detailsCustomerEmail"></td>
+                                </tr>
+                                <tr>
+                                    <th>Phone:</th>
+                                    <td id="detailsCustomerPhone"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>Shipping Address</h6>
+                            <address id="detailsShippingAddress"></address>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Billing Address</h6>
+                            <address id="detailsBillingAddress"></address>
+                        </div>
+                    </div>
+                    
+                    <h6>Order Items</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detailsOrderItems">
+                                <!-- Order items will be loaded here -->
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Subtotal:</strong></td>
+                                    <td class="text-end" id="detailsSubtotal"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Shipping:</strong></td>
+                                    <td class="text-end" id="detailsShipping"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Tax:</strong></td>
+                                    <td class="text-end" id="detailsTax"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                                    <td class="text-end" id="detailsTotal"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h6>Order Notes</h6>
+                        <div class="order-notes mb-3" id="orderNotesList">
+                            <!-- Order notes will be loaded here -->
+                            <p class="text-muted">No notes for this order.</p>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="newOrderNote" placeholder="Add a note...">
+                            <button class="btn btn-outline-primary" type="button" id="addOrderNote">Add Note</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="dropdown me-auto">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="updateStatusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Update Status
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="updateStatusDropdown">
+                            <li><a class="dropdown-item update-status" data-status="new" href="#">New</a></li>
+                            <li><a class="dropdown-item update-status" data-status="processing" href="#">Processing</a></li>
+                            <li><a class="dropdown-item update-status" data-status="shipped" href="#">Shipped</a></li>
+                            <li><a class="dropdown-item update-status" data-status="delivered" href="#">Delivered</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item update-status text-danger" data-status="cancelled" href="#">Cancelled</a></li>
+                        </ul>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="printInvoice">Print Invoice</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Order Modal -->
+    <div class="modal fade" id="createOrderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createOrderForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Customer Information</h6>
+                                <div class="mb-3">
+                                    <label for="customerSelect" class="form-label">Select Customer</label>
+                                    <select class="form-select" id="customerSelect">
+                                        <option value="">Create New Customer</option>
+                                        <!-- Existing customers will be loaded here -->
+                                    </select>
+                                </div>
+                                <div id="newCustomerFields">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="customerFirstName" class="form-label">First Name</label>
+                                            <input type="text" class="form-control" id="customerFirstName" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="customerLastName" class="form-label">Last Name</label>
+                                            <input type="text" class="form-control" id="customerLastName" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customerEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="customerEmail" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customerPhone" class="form-label">Phone</label>
+                                        <input type="tel" class="form-control" id="customerPhone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Shipping Information</h6>
+                                <div class="mb-3">
+                                    <label for="shippingAddress" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="shippingAddress" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="shippingCity" class="form-label">City</label>
+                                        <input type="text" class="form-control" id="shippingCity" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="shippingState" class="form-label">State</label>
+                                        <input type="text" class="form-control" id="shippingState" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="shippingZip" class="form-label">ZIP Code</label>
+                                        <input type="text" class="form-control" id="shippingZip" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="shippingCountry" class="form-label">Country</label>
+                                        <input type="text" class="form-control" id="shippingCountry" required>
+                                    </div>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="sameAsBilling" checked>
+                                    <label class="form-check-label" for="sameAsBilling">
+                                        Billing address same as shipping
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="billingAddressFields" class="d-none">
+                            <h6>Billing Information</h6>
+                            <div class="row mb-3">
+                                <div class="col-md-12 mb-3">
+                                    <label for="billingAddress" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="billingAddress">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="billingCity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="billingCity">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="billingState" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="billingState">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="billingZip" class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-control" id="billingZip">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="billingCountry" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="billingCountry">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h6>Order Items</h6>
+                        <div class="table-responsive mb-3">
+                            <table class="table table-bordered" id="orderItemsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Size</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <select class="form-select product-select">
+                                                <option value="">Select Product</option>
+                                                <!-- Products will be loaded here -->
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-select size-select">
+                                                <option value="">Select Size</option>
+                                                <!-- Sizes will be loaded here -->
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control product-price" readonly>
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control product-quantity" min="1" value="1">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control product-total" readonly>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-outline-danger remove-item">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6">
+                                            <button type="button" class="btn btn-sm btn-outline-primary" id="addOrderItem">
+                                                <i class="bi bi-plus-lg me-1"></i>Add Item
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <h6>Payment Information</h6>
+                                <div class="mb-3">
+                                    <label for="paymentMethod" class="form-label">Payment Method</label>
+                                    <select class="form-select" id="paymentMethod" required>
+                                        <option value="">Select Payment Method</option>
+                                        <option value="credit_card">Credit Card</option>
+                                        <option value="paypal">PayPal</option>
+                                        <option value="apple_pay">Apple Pay</option>
+                                        <option value="cash_on_delivery">Cash on Delivery</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="orderStatus" class="form-label">Order Status</label>
+                                    <select class="form-select" id="orderStatus" required>
+                                        <option value="new">New</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="shipped">Shipped</option>
+                                        <option value="delivered">Delivered</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Order Summary</h6>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Subtotal:</span>
+                                            <span id="orderSubtotal">$0.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Shipping:</span>
+                                            <span id="orderShipping">$0.00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Tax (8%):</span>
+                                            <span id="orderTax">$0.00</span>
+                                        </div>
+                                        <hr>
+                                        <div class="d-flex justify-content-between">
+                                            <strong>Total:</strong>
+                                            <strong id="orderTotal">$0.00</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="orderNotes" class="form-label">Order Notes</label>
+                            <textarea class="form-control" id="orderNotes" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveOrder">Create Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/admin.js"></script>
+    <script src="js/orders.js"></script>
+</body>
+</html>
