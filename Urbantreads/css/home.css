@@ -473,7 +473,7 @@ a:hover {
     background-color: white;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    z-index: 1000;
+    z-index: 1500;
     max-height: 400px;
     overflow-y: auto;
     display: none;
@@ -586,10 +586,10 @@ a:hover {
     z-index: 500;
   }
   
+  /* need this */
   /* Adjust Search Container */
   .search-container {
     position: relative;
-    /* Ensure the search bar fits well within its column */
     width: 100%;
   }
   
