@@ -196,7 +196,7 @@ function initSearch() {
             name: 'Anthony Edwards 1 "Iron Sharpens Iron" ',
             brand: 'Adidas',
             price: 139.76,
-            image: '/Assests/Adidas/Basketball/Mens/AH9/ah9.png',
+            image: '/Assests/Adidas/Basketball/Mens/AE1/ae1.png',
             category: 'Basketball',
         },
         {
