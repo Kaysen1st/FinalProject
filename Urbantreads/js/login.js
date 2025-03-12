@@ -1,136 +1,71 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize login page
-    initLoginPage();
+    // Get form elements
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginFormWrapper = document.getElementById('loginFormWrapper');
+    const registerFormWrapper = document.getElementById('registerFormWrapper');
+    const registrationCompleteWrapper = document.getElementById('registrationCompleteWrapper');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const showLoginBtn = document.getElementById('showLoginBtn');
     
-    // Initialize navbar scroll effect
-    initNavbarScroll();
+    // Show registration form
+    if (showRegisterBtn) {
+        showRegisterBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginFormWrapper.classList.add('d-none');
+            registerFormWrapper.classList.remove('d-none');
+        });
+    }
     
-    // Initialize search functionality
-    initSearch();
+    // Show login form
+    if (showLoginBtn) {
+        showLoginBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            registerFormWrapper.classList.add('d-none');
+            loginFormWrapper.classList.remove('d-none');
+        });
+    }
     
-    // Initialize user menu
-    initUserMenu();
-    
-    // Load cart
-    loadCart();
-});
-
-// Initialize login page
-function initLoginPage() {
-    // Login form
-    const loginPageForm = document.getElementById('loginPageForm');
-    if (loginPageForm) {
-        loginPageForm.addEventListener('submit', function(e) {
+    // Handle login form submission
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const email = document.getElementById('loginPageEmail').value;
-            const password = document.getElementById('loginPagePassword').value;
-            const rememberMe = document.getElementById('rememberMePage').checked;
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
             
-            // Validate form
+            // Validate login
             if (!validateLoginForm(email, password)) {
                 return;
             }
             
-            // Simulate login
-            simulateLogin(email, password, rememberMe);
+            // Process login
+            processLogin(email, password, rememberMe);
         });
     }
     
-    // Password toggle
-    const passwordToggle = document.getElementById('passwordToggle');
-    if (passwordToggle) {
-        passwordToggle.addEventListener('click', function() {
-            const passwordInput = document.getElementById('loginPagePassword');
-            const icon = this.querySelector('i');
-            
-            // Toggle password visibility
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye');
-            }
-        });
-    }
-    
-    // Show signup modal
-    const showSignupBtn = document.getElementById('showSignupBtn');
-    if (showSignupBtn) {
-        showSignupBtn.addEventListener('click', function(e) {
+    // Handle registration form submission
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const signupModal = new bootstrap.Modal(document.getElementById('signupModal'));
-            signupModal.show();
-        });
-    }
-    
-    // Signup form
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
-            const termsAgree = document.getElementById('termsAgree').checked;
             
-            // Validate form
-            if (!validateSignupForm(name, email, password, confirmPassword, termsAgree)) {
+            // Validate registration
+            if (!validateRegistrationForm(name, email, password, confirmPassword)) {
                 return;
             }
             
-            // Simulate signup
-            simulateSignup(name, email, password);
+            // Process registration
+            processRegistration(name, email, password);
         });
     }
-    
-    // Signup password toggle
-    const signupPasswordToggle = document.getElementById('signupPasswordToggle');
-    if (signupPasswordToggle) {
-        signupPasswordToggle.addEventListener('click', function() {
-            const passwordInput = document.getElementById('signupPassword');
-            const icon = this.querySelector('i');
-            
-            // Toggle password visibility
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye');
-            }
-        });
-    }
-    
-    // Confirm password toggle
-    const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
-    if (confirmPasswordToggle) {
-        confirmPasswordToggle.addEventListener('click', function() {
-            const passwordInput = document.getElementById('confirmPassword');
-            const icon = this.querySelector('i');
-            
-            // Toggle password visibility
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('bi-eye');
-                icon.classList.add('bi-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('bi-eye-slash');
-                icon.classList.add('bi-eye');
-            }
-        });
-    }
-}
+});
 
 // Validate login form
 function validateLoginForm(email, password) {
@@ -156,8 +91,8 @@ function validateLoginForm(email, password) {
     return true;
 }
 
-// Validate signup form
-function validateSignupForm(name, email, password, confirmPassword, termsAgree) {
+// Validate registration form
+function validateRegistrationForm(name, email, password, confirmPassword) {
     // Validate name
     if (!name) {
         showNotification('Please enter your name', 'error');
@@ -184,46 +119,38 @@ function validateSignupForm(name, email, password, confirmPassword, termsAgree) 
     }
     
     // Password strength validation
-    if (password.length < 8) {
-        showNotification('Password must be at least 8 characters long', 'error');
+    if (password.length < 6) {
+        showNotification('Password must be at least 6 characters long', 'error');
         return false;
     }
     
-    // Validate confirm password
+    // Validate password confirmation
     if (password !== confirmPassword) {
         showNotification('Passwords do not match', 'error');
-        return false;
-    }
-    
-    // Validate terms agreement
-    if (!termsAgree) {
-        showNotification('Please agree to the Terms of Service and Privacy Policy', 'error');
         return false;
     }
     
     return true;
 }
 
-// Simulate login
-function simulateLogin(email, password, rememberMe) {
-    // In a real application, this would be an API call to a backend
-    // For this demo, we'll simulate a successful login after a delay
+// Process login
+function processLogin(email, password, rememberMe) {
+    // In a real application, this would be an API call to your backend
+    // For this demo, we'll simulate a successful login
     
     showNotification('Logging you in...', 'success');
     
     setTimeout(() => {
-        // Store user info in localStorage if rememberMe is checked
-        const name = email.split('@')[0]; // Extract name from email
-        
-        // Store user data
+        // Create user object
         const userData = {
+            name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1), // Capitalize first letter of email username
             email: email,
-            name: name.charAt(0).toUpperCase() + name.slice(1), // Capitalize first letter
             isLoggedIn: true,
-            firstName: name.charAt(0).toUpperCase() + name.slice(1),
+            firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
             lastName: ''
         };
         
+        // Save user data to localStorage
         localStorage.setItem('user', JSON.stringify(userData));
         
         // Redirect to home page
@@ -231,15 +158,19 @@ function simulateLogin(email, password, rememberMe) {
     }, 1500);
 }
 
-// Simulate signup
-function simulateSignup(name, email, password) {
-    // In a real application, this would be an API call to a backend
-    // For this demo, we'll simulate a successful signup after a delay
+// Process registration
+function processRegistration(name, email, password) {
+    // In a real application, this would be an API call to your backend
+    // For this demo, we'll simulate a successful registration
     
     showNotification('Creating your account...', 'success');
     
     setTimeout(() => {
-        // Store user data
+        // Show registration complete message
+        document.getElementById('registerFormWrapper').classList.add('d-none');
+        document.getElementById('registrationCompleteWrapper').classList.remove('d-none');
+        
+        // Create user object
         const userData = {
             name: name,
             email: email,
@@ -248,255 +179,9 @@ function simulateSignup(name, email, password) {
             lastName: name.split(' ').slice(1).join(' ')
         };
         
+        // Save user data to localStorage
         localStorage.setItem('user', JSON.stringify(userData));
-        
-        // Close signup modal
-        const signupModal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
-        signupModal.hide();
-        
-        // Redirect to home page
-        setTimeout(() => {
-            window.location.href = 'home.html';
-        }, 500);
     }, 1500);
-}
-
-// Initialize navbar scroll effect
-function initNavbarScroll() {
-    window.addEventListener('scroll', function() {
-        const navbar = document.querySelector('.navbar');
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-}
-
-// Initialize search functionality
-function initSearch() {
-    const searchInput = document.querySelector('.search-input');
-    const searchBtn = document.querySelector('.search-btn');
-    const searchResultsDropdown = document.querySelector('.search-results-dropdown');
-    
-    if (!searchInput || !searchBtn || !searchResultsDropdown) return;
-    
-    // Sample products data for search
-    const products = [
-        {
-            id: 1,
-            name: 'Kobe 6 Protro',
-            brand: 'Nike',
-            price: 165.88,
-            image: '/Assests/Nike/Basketball/Mens/KB6/kb6.jpg',
-            category: 'Basketball',
-        },
-        {
-            id: 7,
-            name: 'Nike Air Force 1 Low',
-            brand: 'Nike',
-            price: 129.99,
-            image: '/Assests/Nike/Lifestyle/Mens/AF1L/af1l.jpg',
-            category: 'Lifestyle',
-        },
-        {
-            id: 20,
-            name: 'UGG Classic Short II',
-            brand: 'Deckers Brands',
-            price: 180.00,
-            image: '/Assests/DeckerBrands/Lifestyle/UGGC/uggc.png',
-            category: 'Lifestyle',
-        },
-        {
-            id: 14,
-            name: 'Adidas Originals Campus 00s',
-            brand: 'Adidas',
-            price: 110.00,
-            image: '/Assests/Adidas/Lifestyle/Womens/AC/ac.png',
-            category: 'Lifestyle',
-        },
-        {
-            id: 16,
-            name: 'Adidas Lightshift',
-            brand: 'Adidas',
-            price: 100.00,
-            image: '/Assests/Adidas/Running/Mens/ALS/als.png',
-            category: 'Running',
-        },
-        {
-            id: 5,
-            name: 'Air Pegasus Wave Premium',
-            brand: 'Nike',
-            price: 155.40,
-            image: '/Assests/Nike/Running/Mens/apgw/apgw.jpg',
-            category: 'Running',
-        },
-        {
-            id: 18,
-            name: 'Anthony Edwards 1 "Iron Sharpens Iron" ',
-            brand: 'Adidas',
-            price: 139.76,
-            image: '/Assests/Adidas/Basketball/Mens/AE1/ae1.png',
-            category: 'Basketball',
-        },
-        {
-            id: 21,
-            name: 'HOKA Clifton 9 ',
-            brand: 'Deckers Brands',
-            price: 145.00,
-            image: '/Assests/DeckerBrands/Running/HC9/hc9.png',
-            category: 'Running',
-        }
-    ];
-    
-    // Search function
-    function performSearch(query) {
-        if (!query) {
-            searchResultsDropdown.classList.remove('show');
-            return;
-        }
-        
-        // Convert query to lowercase for case-insensitive search
-        query = query.toLowerCase();
-        
-        // Filter products based on search query
-        const results = products.filter(product => 
-            product.name.toLowerCase().includes(query) ||
-            product.brand.toLowerCase().includes(query) ||
-            product.category.toLowerCase().includes(query)
-        );
-        
-        // Render search results
-        if (results.length === 0) {
-            searchResultsDropdown.innerHTML = `
-                <div class="search-message">No results found for "${query}"</div>
-            `;
-        } else {
-            let resultsHTML = '';
-            
-            results.forEach(product => {
-                resultsHTML += `
-                    <a href="product.html?id=${product.id}" class="search-result-item">
-                        <img src="${product.image}" alt="${product.name}" class="search-result-img">
-                        <div class="search-result-info">
-                            <div class="search-result-title">${product.name}</div>
-                            <div class="search-result-brand">${product.brand} | ${product.category}</div>
-                        </div>
-                        <div class="search-result-price">$${product.price.toFixed(2)}</div>
-                    </a>
-                `;
-            });
-            
-            searchResultsDropdown.innerHTML = resultsHTML;
-        }
-        
-        // Show dropdown
-        searchResultsDropdown.classList.add('show');
-    }
-    
-    // Event listeners
-    searchInput.addEventListener('input', function() {
-        performSearch(this.value.trim());
-    });
-    
-    searchBtn.addEventListener('click', function() {
-        performSearch(searchInput.value.trim());
-    });
-    
-    // Hide dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!searchInput.contains(e.target) && !searchBtn.contains(e.target) && !searchResultsDropdown.contains(e.target)) {
-            searchResultsDropdown.classList.remove('show');
-        }
-    });
-    
-    // Prevent dropdown from closing when clicking inside it
-    searchResultsDropdown.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-    
-    // Handle Enter key press
-    searchInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            performSearch(this.value.trim());
-        }
-    });
-}
-
-// Initialize user menu
-function initUserMenu() {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const userLoggedInElement = document.querySelector('.user-logged-in');
-    const userNotLoggedInElement = document.querySelector('.user-not-logged-in');
-    const userNameElement = document.querySelector('.user-name');
-    const userAvatarElement = document.querySelector('.user-avatar');
-    
-    if (user && user.isLoggedIn) {
-        // Show logged in menu
-        if (userLoggedInElement) userLoggedInElement.classList.remove('d-none');
-        if (userNotLoggedInElement) userNotLoggedInElement.classList.add('d-none');
-        
-        // Update user name and avatar
-        if (userNameElement) userNameElement.textContent = user.name || 'User';
-        if (userAvatarElement && user.avatar) userAvatarElement.src = user.avatar;
-    } else {
-        // Show not logged in menu
-        if (userLoggedInElement) userLoggedInElement.classList.add('d-none');
-        if (userNotLoggedInElement) userNotLoggedInElement.classList.remove('d-none');
-    }
-}
-
-// Load cart from localStorage
-function loadCart() {
-    const cartCount = document.querySelector('.cart-count');
-    const cartItems = document.querySelector('.cart-items');
-    const cartTotal = document.querySelector('.cart-total');
-    const cartSummary = document.querySelector('.cart-summary');
-    const emptyCartMessage = document.querySelector('.empty-cart-message');
-    
-    if (!cartCount || !cartItems) return;
-    
-    // Get cart data
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    // Update cart count
-    cartCount.textContent = cart.length;
-    
-    // Update cart dropdown
-    if (cart.length === 0) {
-        cartItems.innerHTML = '<p class="text-center empty-cart-message">Your cart is empty</p>';
-        if (cartSummary) cartSummary.classList.add('d-none');
-        if (emptyCartMessage) emptyCartMessage.classList.remove('d-none');
-    } else {
-        let cartItemsHTML = '';
-        
-        cart.forEach((item, index) => {
-            cartItemsHTML += `
-                <div class="cart-item">
-                    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-                    <div class="cart-item-info">
-                        <h6 class="cart-item-title">${item.name}</h6>
-                        <div class="d-flex justify-content-between">
-                            <div>
-                                ${item.size ? `<small>Size: ${item.size}</small><br>` : ''}
-                                <small>Qty: ${item.quantity}</small>
-                            </div>
-                            <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        });
-        
-        cartItems.innerHTML = cartItemsHTML;
-        if (cartSummary) cartSummary.classList.remove('d-none');
-        if (emptyCartMessage) emptyCartMessage.classList.add('d-none');
-        
-        // Update cart total
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        if (cartTotal) cartTotal.textContent = `$${total.toFixed(2)}`;
-    }
 }
 
 // Show notification
