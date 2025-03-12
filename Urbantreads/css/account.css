@@ -10,8 +10,7 @@
     --light-color: #f8f9fa;
     --gray-color: #6c757d;
     --success-color: #28a745;
-    --danger-color: #dc3545;
-    
+    --danger-color: #dc3545;  
     --body-font: 'Poppins', sans-serif;
     --heading-font-weight: 700;
     --transition-speed: 0.3s;
@@ -479,6 +478,11 @@
     text-align: center;
     color: var(--gray-color);
 }
+/* Adjust Search Container */
+  .search-container {
+    position: relative;
+    width: 100%;
+  }
 
 /* User Avatar Styles */
 .user-container {
@@ -516,7 +520,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
 /* Responsive styles */
 @media (max-width: 991.98px) {
     .account-sidebar {

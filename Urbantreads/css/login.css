@@ -325,6 +325,11 @@ a:hover {
     text-align: center;
     color: var(--gray-color);
 }
+/* Adjust Search Container */
+  .search-container {
+    position: relative;
+    width: 100%;
+  }
 
 /* Footer */
 .footer {
