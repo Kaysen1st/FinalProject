@@ -145,67 +145,67 @@ function initSearch() {
     const products = [
         {
             id: 1,
-            name: 'Air Jordan 1 Retro High OG',
-            brand: 'Jordan',
-            price: 179.99,
-            image: '../assets/product-1.jpg',
-            category: 'Basketball'
-        },
-        {
-            id: 2,
-            name: 'Yeezy Boost 350 V2',
-            brand: 'Adidas',
-            price: 249.99,
-            image: '../assets/product-2.jpg',
-            category: 'Lifestyle'
-        },
-        {
-            id: 3,
-            name: 'Nike Dunk Low',
+            name: 'Kobe 6 Protro',
             brand: 'Nike',
-            price: 129.99,
-            image: '../assets/product-3.jpg',
-            category: 'Lifestyle'
-        },
-        {
-            id: 4,
-            name: 'New Balance 550',
-            brand: 'New Balance',
-            price: 119.99,
-            image: '../assets/product-4.jpg',
-            category: 'Lifestyle'
-        },
-        {
-            id: 5,
-            name: 'Air Jordan 4 Retro',
-            brand: 'Jordan',
-            price: 209.99,
-            image: '../assets/product-5.jpg',
-            category: 'Basketball'
-        },
-        {
-            id: 6,
-            name: 'Adidas Forum Low',
-            brand: 'Adidas',
-            price: 99.99,
-            image: '../assets/product-6.jpg',
-            category: 'Lifestyle'
+            price: 165.88,
+            image: '/Assests/Nike/Basketball/Mens/KB6/kb6.jpg',
+            category: 'Basketball',
         },
         {
             id: 7,
             name: 'Nike Air Force 1 Low',
             brand: 'Nike',
-            price: 109.99,
-            image: '.../Assests/Nike/Lifestyle/AF1L/af1l',
-            category: 'Lifestyle'
+            price: 129.99,
+            image: '/Assests/Nike/Lifestyle/Mens/AF1L/af1l.jpg',
+            category: 'Lifestyle',
         },
         {
-            id: 8,
-            name: 'Puma Suede Classic',
-            brand: 'Puma',
-            price: 79.99,
-            image: '../assets/product-8.jpg',
-            category: 'Lifestyle'
+            id: 20,
+            name: 'UGG Classic Short II',
+            brand: 'Deckers Brands',
+            price: 180.00,
+            image: '/Assests/DeckerBrands/Lifestyle/UGGC/uggc.png',
+            category: 'Lifestyle',
+        },
+        {
+            id: 14,
+            name: 'Adidas Originals Campus 00s',
+            brand: 'Adidas',
+            price: 110.00,
+            image: '/Assests/Adidas/Lifestyle/Womens/AC/ac.png',
+            category: 'Lifestyle',
+        },
+        {
+            id: 16,
+            name: 'Adidas Lightshift',
+            brand: 'Adidas',
+            price: 100.00,
+            image: '/Assests/Adidas/Running/Mens/ALS/als.png',
+            category: 'Running',
+        },
+        {
+            id: 5,
+            name: 'Air Pegasus Wave Premium',
+            brand: 'Nike',
+            price: 155.40,
+            image: '/Assests/Nike/Running/Mens/apgw/apgw.jpg',
+            category: 'Running',
+        },
+        {
+            id: 18,
+            name: 'Anthony Edwards 1 "Iron Sharpens Iron" ',
+            brand: 'Adidas',
+            price: 139.76,
+            image: '/Assests/Adidas/Basketball/Mens/AH9/ah9.png',
+            category: 'Basketball',
+        },
+        {
+            id: 21,
+            name: 'HOKA Clifton 9 ',
+            brand: 'Deckers Brands',
+            price: 145.00,
+            image: '/Assests/DeckerBrands/Running/HC9/hc9.png',
+            category: 'Running',
         }
     ];
     
