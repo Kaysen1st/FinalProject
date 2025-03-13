@@ -1,4 +1,3 @@
-// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize cart from localStorage
     loadCart();
@@ -266,10 +265,10 @@ function initCartPage() {
         const orderDiscount = document.getElementById('orderDiscount');
         
         // Check if promo code is valid
-        if (promoCode === 'WELCOME10') {
+        if (promoCode === 'DADDYSAMUEL','WELCOME10') {
             // Calculate 10% discount
             const subtotal = parseFloat(orderSubtotal.textContent.replace('$', ''));
-            const discount = subtotal * 0.1;
+            const discount = subtotal * 0.5 ;                    
             
             // Update UI
             promoMessage.classList.remove('d-none');
@@ -288,7 +287,7 @@ function initCartPage() {
             
             showNotification('Promo code applied successfully!');
         } else {
-            showNotification('Invalid promo code. Try WELCOME10 for 10% off.', 'error');
+            showNotification('Invalid promo code. Try WELCOME10 for 50% off.', 'error');
         }
     }
     
@@ -360,41 +359,40 @@ function initCartPage() {
 
 // Function to show login/register modal for checkout
 function showCheckoutLoginModal() {
+    // Create modal if it doesn't exist
     if (!document.getElementById('checkoutLoginModal')) {
         const modalHTML = `
             <div class="modal fade" id="checkoutLoginModal" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Login or Register to Continue</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body p-0">
                             <div class="row g-0">
-                                <!-- Left side - Image -->
-                                <div class="col-md-5 d-none d-md-block">
-                                    <div class="login-image h-100">
-                                        <div class="logo-container">
-                                            <img src="/Assests/logo.png" alt="UrbanTreads Logo" class="logo" style="height: 60px;">
+                                <!-- Login Container -->
+                                <div id="loginContainer">
+                                    <div class="row g-0">
+                                        <!-- Left side - Login Image -->
+                                        <div class="col-md-5 d-none d-md-block">
+                                            <div class="login-image h-100">
+                                                <div class="logo-container">
+                                                    <img src="/Assests/logo.png" alt="UrbanTreads Logo" class="logo" style="height: 60px;">
+                                                </div>
+                                                <img src="/Assests/login banner.webp" alt="Login" class="img-fluid h-100" style="object-fit: cover;">
+                                            </div>
                                         </div>
-                                        <img src="/Assests/login banner.webp" alt="Login" class="img-fluid h-100" style="object-fit: cover;">
-                                    </div>
-                                </div>
-                                <!-- Right side - Form -->
-                                <div class="col-md-7">
-                                    <div class="checkout-form-container p-4">
-                                        <ul class="nav nav-tabs" id="checkoutAuthTabs" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane" type="button" role="tab" aria-selected="true">Login</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-tab-pane" type="button" role="tab" aria-selected="false">Register</button>
-                                            </li>
-                                        </ul>
                                         
-                                        <div class="tab-content mt-4" id="checkoutAuthTabsContent">
-                                            <!-- Login Tab -->
-                                            <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+                                        <!-- Right side - Login Form -->
+                                        <div class="col-md-7">
+                                            <div class="checkout-form-container p-4">
+                                                <div class="d-flex justify-content-center mb-4">
+                                                    <div class="auth-toggle">
+                                                        <button class="auth-toggle-btn active" id="loginToggleBtn">Login</button>
+                                                        <button class="auth-toggle-btn" id="registerToggleBtn">Register</button>
+                                                    </div>
+                                                </div>
+                                                
                                                 <form id="checkoutLoginForm">
                                                     <div class="mb-3">
                                                         <label for="checkoutLoginEmail" class="form-label">Email Address</label>
@@ -420,7 +418,7 @@ function showCheckoutLoginModal() {
                                                         <a href="#" class="forgot-password">Forgot Password?</a>
                                                     </div>
                                                     
-                                                    <button type="submit" class="btn btn-primary w-100">Login & Continue</button>
+                                                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Login & Continue</button>
                                                 </form>
                                                 
                                                 <div class="separator mt-4">
@@ -436,9 +434,34 @@ function showCheckoutLoginModal() {
                                                     </button>
                                                 </div>
                                             </div>
-                                            
-                                            <!-- Register Tab -->
-                                            <div class="tab-pane fade" id="register-tab-pane" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Register Container -->
+                                <div id="registerContainer" style="display: none;">
+                                    <div class="row g-0">
+                                        <!-- Left side - Register Image -->
+                                        <div class="col-md-5 d-none d-md-block">
+                                            <div class="login-image h-100">
+                                                <div class="logo-container">
+                                                    <img src="/Assests/logo.png" alt="UrbanTreads Logo" class="logo" style="height: 60px;">
+                                                </div>
+                                                <!-- Different image for register tab -->
+                                                <img src="/Assests/model.jpg" alt="Register" class="img-fluid h-100" style="object-fit: cover;">
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Right side - Register Form -->
+                                        <div class="col-md-7">
+                                            <div class="checkout-form-container p-4">
+                                                <div class="d-flex justify-content-center mb-4">
+                                                    <div class="auth-toggle">
+                                                        <button class="auth-toggle-btn" id="loginToggleBtn2">Login</button>
+                                                        <button class="auth-toggle-btn active" id="registerToggleBtn2">Register</button>
+                                                    </div>
+                                                </div>
+                                                
                                                 <form id="checkoutRegisterForm">
                                                     <div class="mb-3">
                                                         <label for="checkoutRegisterName" class="form-label">Name</label>
@@ -472,7 +495,7 @@ function showCheckoutLoginModal() {
                                                         </div>
                                                     </div>
                                                     
-                                                    <button type="submit" class="btn btn-primary w-100">Register & Continue</button>
+                                                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Register & Continue</button>
                                                 </form>
                                                 
                                                 <div class="separator mt-4">
@@ -498,8 +521,148 @@ function showCheckoutLoginModal() {
             </div>
         `;
         
+        // Add custom styles for checkout modal
+        const style = document.createElement('style');
+        style.textContent = `
+            .auth-toggle {
+                display: flex;
+                justify-content: center;
+                border: 1px solid #dee2e6;
+                border-radius: 50px;
+                overflow: hidden;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .auth-toggle-btn {
+                background: none;
+                border: none;
+                padding: 10px 30px;
+                flex: 1;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                font-weight: 500;
+                color: #6c757d;
+            }
+            
+            .auth-toggle-btn.active {
+                background-color: var(--primary-color);
+                color: white;
+            }
+            
+            .btn-facebook {
+                background-color: #3b5998;
+                color: white;
+            }
+            
+            .btn-facebook:hover {
+                background-color: #2d4373;
+                color: white;
+            }
+            
+            .btn-google {
+                background-color: white;
+                color: #444;
+                border: 1px solid #ddd;
+            }
+            
+            .btn-google:hover {
+                background-color: #f1f1f1;
+            }
+            
+            .checkout-form-container {
+                max-width: 100%;
+                height: 100%;
+                overflow-y: auto;
+                padding: 30px !important;
+            }
+            
+            .separator {
+                display: flex;
+                align-items: center;
+                text-align: center;
+                margin: 1.5rem 0;
+            }
+            
+            .separator::before,
+            .separator::after {
+                content: '';
+                flex: 1;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .separator span {
+                padding: 0 10px;
+                color: var(--gray-color);
+                font-size: 0.9rem;
+            }
+            
+            .forgot-password {
+                color: var(--primary-color);
+                font-size: 0.9rem;
+                text-decoration: none;
+            }
+            
+            .forgot-password:hover {
+                text-decoration: underline;
+            }
+            
+            .login-image {
+                position: relative;
+                background-color: #f8f9fa;
+            }
+            
+            .logo-container {
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 10;
+            }
+            
+            @media (max-width: 767.98px) {
+                .auth-toggle-btn {
+                    padding: 8px 20px;
+                    font-size: 0.9rem;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
         // Append modal to body
         document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Add toggle functionality between login and register
+        document.getElementById('loginToggleBtn').addEventListener('click', function() {
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('registerContainer').style.display = 'none';
+            this.classList.add('active');
+            document.getElementById('registerToggleBtn').classList.remove('active');
+        });
+        
+        document.getElementById('registerToggleBtn').addEventListener('click', function() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'block';
+            this.classList.add('active');
+            document.getElementById('loginToggleBtn').classList.remove('active');
+        });
+        
+        document.getElementById('loginToggleBtn2').addEventListener('click', function() {
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('registerContainer').style.display = 'none';
+            this.classList.add('active');
+            document.getElementById('registerToggleBtn2').classList.remove('active');
+            document.getElementById('loginToggleBtn').classList.add('active');
+            document.getElementById('registerToggleBtn').classList.remove('active');
+        });
+        
+        document.getElementById('registerToggleBtn2').addEventListener('click', function() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('registerContainer').style.display = 'block';
+            this.classList.add('active');
+            document.getElementById('loginToggleBtn2').classList.remove('active');
+            document.getElementById('registerToggleBtn').classList.add('active');
+            document.getElementById('loginToggleBtn').classList.remove('active');
+        });
         
         // Handle login form submission
         document.getElementById('checkoutLoginForm').addEventListener('submit', function(e) {
