@@ -72,11 +72,15 @@ function initCartPage() {
                 return;
             }
             
-            // In a real application, this would navigate to checkout
-            // For this demo, we'll just scroll to the PayPal button
-            document.getElementById('paypal-button-container').scrollIntoView({
-                behavior: 'smooth'
-            });
+            // Check if user is logged in
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user || !user.isLoggedIn) {
+                // User is not logged in, show login/register modal
+                showCheckoutLoginModal();
+            } else {
+                // User is logged in, show payment method selection
+                showPaymentMethodModal();
+            }
         });
     }
     
@@ -354,6 +358,447 @@ function initCartPage() {
     }
 }
 
+// Function to show login/register modal for checkout
+function showCheckoutLoginModal() {
+    if (!document.getElementById('checkoutLoginModal')) {
+        const modalHTML = `
+            <div class="modal fade" id="checkoutLoginModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Login or Register to Continue</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="row g-0">
+                                <!-- Left side - Image -->
+                                <div class="col-md-5 d-none d-md-block">
+                                    <div class="login-image h-100">
+                                        <div class="logo-container">
+                                            <img src="/Assests/logo.png" alt="UrbanTreads Logo" class="logo" style="height: 60px;">
+                                        </div>
+                                        <img src="/Assests/login banner.webp" alt="Login" class="img-fluid h-100" style="object-fit: cover;">
+                                    </div>
+                                </div>
+                                <!-- Right side - Form -->
+                                <div class="col-md-7">
+                                    <div class="checkout-form-container p-4">
+                                        <ul class="nav nav-tabs" id="checkoutAuthTabs" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login-tab-pane" type="button" role="tab" aria-selected="true">Login</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register-tab-pane" type="button" role="tab" aria-selected="false">Register</button>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="tab-content mt-4" id="checkoutAuthTabsContent">
+                                            <!-- Login Tab -->
+                                            <div class="tab-pane fade show active" id="login-tab-pane" role="tabpanel" aria-labelledby="login-tab" tabindex="0">
+                                                <form id="checkoutLoginForm">
+                                                    <div class="mb-3">
+                                                        <label for="checkoutLoginEmail" class="form-label">Email Address</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                                            <input type="email" class="form-control" id="checkoutLoginEmail" placeholder="you@email.com" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label for="checkoutLoginPassword" class="form-label">Password</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                                            <input type="password" class="form-control" id="checkoutLoginPassword" placeholder="••••••" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="checkoutRememberMe">
+                                                            <label class="form-check-label" for="checkoutRememberMe">Remember me</label>
+                                                        </div>
+                                                        <a href="#" class="forgot-password">Forgot Password?</a>
+                                                    </div>
+                                                    
+                                                    <button type="submit" class="btn btn-primary w-100">Login & Continue</button>
+                                                </form>
+                                                
+                                                <div class="separator mt-4">
+                                                    <span>or</span>
+                                                </div>
+                                                
+                                                <div class="social-login mt-4">
+                                                    <button class="btn btn-facebook w-100 mb-2">
+                                                        <i class="bi bi-facebook me-2"></i> Login with Facebook
+                                                    </button>
+                                                    <button class="btn btn-google w-100">
+                                                        <i class="bi bi-google me-2"></i> Login with Google
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            
+                                            <!-- Register Tab -->
+                                            <div class="tab-pane fade" id="register-tab-pane" role="tabpanel" aria-labelledby="register-tab" tabindex="0">
+                                                <form id="checkoutRegisterForm">
+                                                    <div class="mb-3">
+                                                        <label for="checkoutRegisterName" class="form-label">Name</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                                            <input type="text" class="form-control" id="checkoutRegisterName" placeholder="Juan Dela Cruz" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label for="checkoutRegisterEmail" class="form-label">Email</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                                            <input type="email" class="form-control" id="checkoutRegisterEmail" placeholder="you@email.com" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label for="checkoutRegisterPassword" class="form-label">Password</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                                            <input type="password" class="form-control" id="checkoutRegisterPassword" placeholder="••••••" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label for="checkoutConfirmPassword" class="form-label">Confirm Password</label>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                                            <input type="password" class="form-control" id="checkoutConfirmPassword" placeholder="••••••" required>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <button type="submit" class="btn btn-primary w-100">Register & Continue</button>
+                                                </form>
+                                                
+                                                <div class="separator mt-4">
+                                                    <span>or</span>
+                                                </div>
+                                                
+                                                <div class="social-login mt-4">
+                                                    <button class="btn btn-facebook w-100 mb-2">
+                                                        <i class="bi bi-facebook me-2"></i> Register with Facebook
+                                                    </button>
+                                                    <button class="btn btn-google w-100">
+                                                        <i class="bi bi-google me-2"></i> Register with Google
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Append modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Handle login form submission
+        document.getElementById('checkoutLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('checkoutLoginEmail').value;
+            const password = document.getElementById('checkoutLoginPassword').value;
+            
+            // Simulate login (in a real app, this would call your authentication API)
+            processCheckoutLogin(email, password);
+        });
+        
+        // Handle register form submission
+        document.getElementById('checkoutRegisterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('checkoutRegisterName').value;
+            const email = document.getElementById('checkoutRegisterEmail').value;
+            const password = document.getElementById('checkoutRegisterPassword').value;
+            const confirmPassword = document.getElementById('checkoutConfirmPassword').value;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Simulate registration (in a real app, this would call your registration API)
+            processCheckoutRegistration(name, email, password);
+        });
+    }
+    
+    // Show the modal
+    const loginModal = new bootstrap.Modal(document.getElementById('checkoutLoginModal'));
+    loginModal.show();
+}
+
+// Function to process checkout login
+function processCheckoutLogin(email, password) {
+    // In a real app, this would be an API call to your backend
+    // For this demo, we'll simulate a successful login
+    
+    showNotification('Logging you in...', 'success');
+    
+    setTimeout(() => {
+        // Create user object
+        const userData = {
+            name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1), // Capitalize first letter of email username
+            email: email,
+            isLoggedIn: true,
+            firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
+            lastName: ''
+        };
+        
+        // Save user data to localStorage
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        // Hide login modal
+        const loginModal = bootstrap.Modal.getInstance(document.getElementById('checkoutLoginModal'));
+        loginModal.hide();
+        
+        // Update user menu
+        initUserMenu();
+        
+        // Show payment method modal
+        showPaymentMethodModal();
+    }, 1500);
+}
+
+// Function to process checkout registration
+function processCheckoutRegistration(name, email, password) {
+    // In a real app, this would be an API call to your backend
+    // For this demo, we'll simulate a successful registration
+    
+    showNotification('Creating your account...', 'success');
+    
+    setTimeout(() => {
+        // Create user object
+        const userData = {
+            name: name,
+            email: email,
+            isLoggedIn: true,
+            firstName: name.split(' ')[0],
+            lastName: name.split(' ').slice(1).join(' ')
+        };
+        
+        // Save user data to localStorage
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        // Hide login modal
+        const loginModal = bootstrap.Modal.getInstance(document.getElementById('checkoutLoginModal'));
+        loginModal.hide();
+        
+        // Update user menu
+        initUserMenu();
+        
+        // Show payment method modal
+        showPaymentMethodModal();
+    }, 1500);
+}
+
+// Function to show payment method selection modal
+function showPaymentMethodModal() {
+    // Create modal if it doesn't exist
+    if (!document.getElementById('paymentMethodModal')) {
+        const modalHTML = `
+            <div class="modal fade" id="paymentMethodModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Select Payment Method</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="payment-methods">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="payment-method-card" data-method="cod">
+                                            <div class="payment-method-icon">
+                                                <i class="bi bi-cash"></i>
+                                            </div>
+                                            <div class="payment-method-title">Cash on Delivery</div>
+                                            <div class="payment-method-description">Pay when you receive your order</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="payment-method-card" data-method="card">
+                                            <div class="payment-method-icon">
+                                                <i class="bi bi-credit-card"></i>
+                                            </div>
+                                            <div class="payment-method-title">Credit/Debit Card</div>
+                                            <div class="payment-method-description">Pay securely with your card</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add styles for payment method cards
+        const style = document.createElement('style');
+        style.textContent = `
+            .payment-method-card {
+                border: 2px solid #eee;
+                border-radius: 8px;
+                padding: 1.5rem;
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.3s ease;
+                height: 100%;
+            }
+            
+            .payment-method-card:hover {
+                border-color: var(--primary-color);
+                transform: translateY(-5px);
+            }
+            
+            .payment-method-icon {
+                font-size: 2.5rem;
+                margin-bottom: 1rem;
+                color: var(--primary-color);
+            }
+            
+            .payment-method-title {
+                font-weight: 600;
+                margin-bottom: 0.5rem;
+            }
+            
+            .payment-method-description {
+                font-size: 0.9rem;
+                color: var(--gray-color);
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Append modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Add event listeners to payment method cards
+        document.querySelectorAll('.payment-method-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const method = this.getAttribute('data-method');
+                
+                // Hide payment method modal
+                const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentMethodModal'));
+                paymentModal.hide();
+                
+                if (method === 'cod') {
+                    // Process Cash on Delivery order
+                    processCodOrder();
+                } else if (method === 'card') {
+                    // For card payment, we'll use the PayPal buttons that are already implemented
+                    document.getElementById('paypal-button-container').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    }
+    
+    // Show the modal
+    const paymentModal = new bootstrap.Modal(document.getElementById('paymentMethodModal'));
+    paymentModal.show();
+}
+
+// Function to process Cash on Delivery order
+function processCodOrder() {
+    showNotification('Processing your order...', 'success');
+    
+    setTimeout(() => {
+        // Generate order number
+        const orderNumber = 'UT' + Date.now().toString().substring(5);
+        
+        // Save order to user's orders
+        saveOrderToUserHistory(orderNumber, 'Cash on Delivery');
+        
+        // Show confirmation modal
+        const confirmationOrderNumber = document.getElementById('confirmationOrderNumber');
+        confirmationOrderNumber.textContent = orderNumber;
+        
+        const confirmationModal = new bootstrap.Modal(document.getElementById('orderConfirmationModal'));
+        confirmationModal.show();
+        
+        // Clear cart
+        cart = [];
+        saveCart();
+        updateCartUI();
+        
+        // If on cart page, update cart display
+        const cartItemsList = document.getElementById('cartItemsList');
+        if (cartItemsList) {
+            cartItemsList.innerHTML = `
+                <div class="text-center py-5 empty-cart-message">
+                    <i class="bi bi-cart-x display-1 text-muted"></i>
+                    <h4 class="mt-3">Your cart is empty</h4>
+                    <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+                    <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                </div>
+            `;
+            
+            // Update summary
+            const cartItemCount = document.getElementById('cartItemCount');
+            const orderSubtotal = document.getElementById('orderSubtotal');
+            const orderShipping = document.getElementById('orderShipping');
+            const orderTax = document.getElementById('orderTax');
+            const orderTotal = document.getElementById('orderTotal');
+            
+            if (cartItemCount) cartItemCount.textContent = '0';
+            if (orderSubtotal) orderSubtotal.textContent = '$0.00';
+            if (orderShipping) orderShipping.textContent = '$0.00';
+            if (orderTax) orderTax.textContent = '$0.00';
+            if (orderTotal) orderTotal.textContent = '$0.00';
+            
+            // Hide discount row if visible
+            const discountRow = document.querySelector('.discount-row');
+            // Continuation of cart.js
+            if (discountRow) discountRow.classList.add('d-none');
+        }
+    }, 1500);
+}
+
+// Save order to user's order history
+function saveOrderToUserHistory(orderNumber, paymentMethod) {
+    // Get current user
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user) return;
+    
+    // Get current date
+    const orderDate = new Date().toISOString().split('T')[0];
+    
+    // Calculate order total
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const shipping = total > 0 ? (total >= 200 ? 0 : 9.99) : 0;
+    const tax = total * 0.08;
+    const orderTotal = total + shipping + tax;
+    
+    // Create new order
+    const newOrder = {
+        id: orderNumber,
+        date: orderDate,
+        total: orderTotal,
+        status: 'processing',
+        paymentMethod: paymentMethod,
+        products: [...cart]
+    };
+    
+    // Get existing orders or initialize empty array
+    let userOrders = JSON.parse(localStorage.getItem('userOrders')) || [];
+    
+    // Add new order
+    userOrders.push(newOrder);
+    
+    // Save updated orders
+    localStorage.setItem('userOrders', JSON.stringify(userOrders));
+}
+
 // Initialize PayPal buttons
 function initPayPalButtons() {
     const paypalContainer = document.getElementById('paypal-button-container');
@@ -385,6 +830,9 @@ function initPayPalButtons() {
                 
                 // Generate order number
                 const orderNumber = 'UT' + Date.now().toString().substring(5);
+                
+                // Save order to user's orders
+                saveOrderToUserHistory(orderNumber, 'PayPal/Card');
                 
                 // Show confirmation modal
                 const confirmationOrderNumber = document.getElementById('confirmationOrderNumber');
@@ -436,92 +884,6 @@ function initPayPalButtons() {
             showNotification('There was an error processing your payment. Please try again.', 'error');
         }
     }).render('#paypal-button-container');
-}
-
-// Add product to cart
-function addToCart(product, size = null, quantity = 1) {
-    // Check if product already exists in cart with same size
-    const existingItemIndex = cart.findIndex(item => 
-        item.id === product.id && item.size === size
-    );
-    
-    if (existingItemIndex !== -1) {
-        // Update quantity if product already exists
-        cart[existingItemIndex].quantity += quantity;
-    } else {
-        // Add new item to cart
-        cart.push({
-            id: product.id,
-            name: product.name,
-            brand: product.brand,
-            price: product.price,
-            image: product.image,
-            size: size,
-            quantity: quantity
-        });
-    }
-    
-    saveCart();
-    updateCartUI();
-    
-    // Update cart page if on it
-    const cartItemsList = document.getElementById('cartItemsList');
-    if (cartItemsList) {
-        initCartPage();
-    }
-    
-    showNotification(`${product.name} added to cart!`);
-}
-
-// Update cart UI in header
-function updateCartUI() {
-    const cartCount = document.querySelector('.cart-count');
-    const cartItems = document.querySelector('.cart-items');
-    const cartTotal = document.querySelector('.cart-total');
-    const cartSummary = document.querySelector('.cart-summary');
-    const emptyCartMessage = document.querySelector('.empty-cart-message');
-    
-    if (!cartCount) return;
-    
-    // Update cart count
-    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
-    
-    // Update dropdown if it exists
-    if (cartItems) {
-        if (cart.length === 0) {
-            cartItems.innerHTML = '<p class="text-center empty-cart-message">Your cart is empty</p>';
-            if (cartSummary) cartSummary.classList.add('d-none');
-            if (emptyCartMessage) emptyCartMessage.classList.remove('d-none');
-        } else {
-            let cartItemsHTML = '';
-            
-            cart.forEach((item, index) => {
-                cartItemsHTML += `
-                    <div class="cart-item">
-                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
-                        <div class="cart-item-info">
-                            <h6 class="cart-item-title">${item.name}</h6>
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    ${item.size ? `<small>Size: ${item.size}</small><br>` : ''}
-                                    <small>Qty: ${item.quantity}</small>
-                                </div>
-                                <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            cartItems.innerHTML = cartItemsHTML;
-            if (cartSummary) cartSummary.classList.remove('d-none');
-            if (emptyCartMessage) emptyCartMessage.classList.add('d-none');
-            
-            // Update cart total
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            if (cartTotal) cartTotal.textContent = `$${total.toFixed(2)}`;
-        }
-    }
 }
 
 // Initialize navbar scroll effect
@@ -726,6 +1088,85 @@ function initUserMenu() {
                 window.location.href = 'home.html';
             }, 1500);
         });
+    }
+}
+
+// Add product to cart
+function addToCart(product, size = null, quantity = 1) {
+    // Check if product already exists in cart with same size
+    const existingItemIndex = cart.findIndex(item => 
+        item.id === product.id && item.size === size
+    );
+    
+    if (existingItemIndex !== -1) {
+        // Update quantity if product already exists
+        cart[existingItemIndex].quantity += quantity;
+    } else {
+        // Add new item to cart
+        cart.push({
+            id: product.id,
+            name: product.name,
+            brand: product.brand,
+            price: product.price,
+            image: product.image,
+            size: size,
+            quantity: quantity
+        });
+    }
+    
+    saveCart();
+    updateCartUI();
+    showNotification(`${product.name} added to cart!`);
+}
+
+// Update cart UI
+function updateCartUI() {
+    const cartCount = document.querySelector('.cart-count');
+    const cartItems = document.querySelector('.cart-items');
+    const cartTotal = document.querySelector('.cart-total');
+    const cartSummary = document.querySelector('.cart-summary');
+    const emptyCartMessage = document.querySelector('.empty-cart-message');
+    
+    if (!cartCount) return;
+    
+    // Update cart count
+    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    
+    // Update dropdown if it exists
+    if (cartItems) {
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<p class="text-center empty-cart-message">Your cart is empty</p>';
+            if (cartSummary) cartSummary.classList.add('d-none');
+            if (emptyCartMessage) emptyCartMessage.classList.remove('d-none');
+        } else {
+            let cartItemsHTML = '';
+            
+            cart.forEach((item) => {
+                cartItemsHTML += `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                        <div class="cart-item-info">
+                            <h6 class="cart-item-title">${item.name}</h6>
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    ${item.size ? `<small>Size: ${item.size}</small><br>` : ''}
+                                    <small>Qty: ${item.quantity}</small>
+                                </div>
+                                <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = cartItemsHTML;
+            if (cartSummary) cartSummary.classList.remove('d-none');
+            if (emptyCartMessage) emptyCartMessage.classList.add('d-none');
+            
+            // Update cart total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            if (cartTotal) cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
     }
 }
 

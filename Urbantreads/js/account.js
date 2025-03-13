@@ -138,7 +138,7 @@ function initAccountPage() {
         });
     });
     
-    // Load orders (demo data)
+    // Load orders (real data from localStorage)
     loadOrders();
     
     // Load wishlist (demo data)
@@ -312,57 +312,16 @@ function initAccountPage() {
     });
 }
 
-// Load orders (demo data)
+// Load orders from localStorage
 function loadOrders() {
     const ordersList = document.getElementById('ordersList');
     if (!ordersList) return;
     
-    // Demo orders
-    const orders = [
-        {
-            id: 'UT12345678',
-            date: '2025-03-25',
-            total: 300.66,
-            status: 'delivered',
-            products: [
-                {
-                    id: 18,
-                    name: 'Anthony Edwards 1 "Iron Sharpens Iron" ',
-                    brand: 'Adidas',
-                    price: 139.76,
-                    image: '/Assests/Adidas/Basketball/Mens/AE1/ae1.png',
-                    quantity: 1
-                },
-                {
-                    id: 8,
-                    name: 'Air Jordan 1 Low "Lunar New Year"',
-                    brand: 'Nike',
-                    price: 160.90,
-                    image: '/Assests/Nike/Lifestyle/Mens/AJ1L/aj1l.jpg',
-                    quantity: 1
-                }
-            ]
-        },
-        {
-            id: 'UT87654321',
-            date: '2025-03-28',
-            total: 139.76,
-            status: 'shipped',
-            products: [
-                {
-                    id: 1,
-                    name: 'Kobe 6 Protro',
-                    brand: 'Nike',
-                    price: 165.88,
-                    image: '/Assests/Nike/Basketball/Mens/KB6/kb6.jpg',
-                    quantity: 1
-                }
-            ]
-        }
-    ];
+    // Get orders from localStorage
+    const userOrders = JSON.parse(localStorage.getItem('userOrders')) || [];
     
     // Check if there are orders
-    if (orders.length === 0) {
+    if (userOrders.length === 0) {
         ordersList.innerHTML = `
             <div class="empty-state text-center py-5">
                 <i class="bi bi-bag display-1 text-muted"></i>
@@ -377,7 +336,7 @@ function loadOrders() {
     // Render orders
     let ordersHTML = '';
     
-    orders.forEach(order => {
+    userOrders.forEach(order => {
         // Format date
         const orderDate = new Date(order.date);
         const formattedDate = orderDate.toLocaleDateString('en-US', {
@@ -414,6 +373,7 @@ function loadOrders() {
                     <div class="d-flex flex-column align-items-end">
                         <span class="order-status ${statusClass}">${order.status.charAt(0).toUpperCase() + order.status.slice(1)}</span>
                         <div class="mt-1">Total: $${order.total.toFixed(2)}</div>
+                        <div class="mt-1 small text-muted">Payment: ${order.paymentMethod}</div>
                     </div>
                 </div>
                 <div class="order-body">
