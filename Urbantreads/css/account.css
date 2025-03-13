@@ -32,7 +32,7 @@
 
 /* Page Header */
 .page-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../assets/account-header.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/Assests/hoka banner.webp');
     background-size: cover;
     background-position: center;
     color: white;
