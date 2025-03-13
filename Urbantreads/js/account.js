@@ -1,4 +1,3 @@
-// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Check if user is logged in
     const user = JSON.parse(localStorage.getItem('user'));
@@ -123,7 +122,7 @@ function initAccountPage() {
     // Handle tab navigation with URL hash
     const hash = window.location.hash;
     if (hash) {
-        const tabId = hash.substring(1); // Remove the # character
+        const tabId = hash.substring(1);
         const tabElement = document.querySelector(`[href="#${tabId}"]`);
         if (tabElement) {
             tabElement.click();

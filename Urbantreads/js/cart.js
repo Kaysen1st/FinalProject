@@ -241,12 +241,11 @@ function initCartPage() {
             subtotal += cart[index].price * quantity;
         });
         
-        // If no quantity inputs are found (e.g., cart was empty), calculate from cart
         if (quantityInputs.length === 0) {
             subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
         
-        const shipping = subtotal > 0 ? (subtotal >= 200 ? 0 : 9.99) : 0; // Free shipping over $200
+        const shipping = subtotal > 0 ? (subtotal >= 200 ? 0 : 9.99) : 0;
         const tax = subtotal * 0.08; // 8% tax rate
         const total = subtotal + shipping + tax;
         
@@ -265,7 +264,7 @@ function initCartPage() {
         const orderDiscount = document.getElementById('orderDiscount');
         
         // Check if promo code is valid
-        if (promoCode === 'DADDYSAMUEL','WELCOME10') {
+        if (promoCode === 'DADDYSAMUEL') {
             // Calculate 10% discount
             const subtotal = parseFloat(orderSubtotal.textContent.replace('$', ''));
             const discount = subtotal * 0.5 ;                    
@@ -287,7 +286,7 @@ function initCartPage() {
             
             showNotification('Promo code applied successfully!');
         } else {
-            showNotification('Invalid promo code. Try WELCOME10 for 50% off.', 'error');
+            showNotification('Invalid promo code. Try DADDYSAMUEL for 50% off.', 'error');
         }
     }
     
@@ -702,8 +701,6 @@ function showCheckoutLoginModal() {
 
 // Function to process checkout login
 function processCheckoutLogin(email, password) {
-    // In a real app, this would be an API call to your backend
-    // For this demo, we'll simulate a successful login
     
     showNotification('Logging you in...', 'success');
     
@@ -734,8 +731,6 @@ function processCheckoutLogin(email, password) {
 
 // Function to process checkout registration
 function processCheckoutRegistration(name, email, password) {
-    // In a real app, this would be an API call to your backend
-    // For this demo, we'll simulate a successful registration
     
     showNotification('Creating your account...', 'success');
     
