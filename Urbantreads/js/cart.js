@@ -840,25 +840,211 @@ function showPaymentMethodModal() {
         document.body.insertAdjacentHTML('beforeend', modalHTML);
         
         // Add event listeners to payment method cards
-        document.querySelectorAll('.payment-method-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const method = this.getAttribute('data-method');
-                
-                // Hide payment method modal
-                const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentMethodModal'));
-                paymentModal.hide();
-                
-                if (method === 'cod') {
-                    // Process Cash on Delivery order
-                    processCodOrder();
-                } else if (method === 'card') {
-                    // For card payment, we'll use the PayPal buttons that are already implemented
-                    document.getElementById('paypal-button-container').scrollIntoView({
-                        behavior: 'smooth'
-                    });
+// Update the event listener for payment method cards in cart.js
+document.querySelectorAll('.payment-method-card').forEach(card => {
+    card.addEventListener('click', function() {
+        const method = this.getAttribute('data-method');
+        
+        // Hide payment method modal
+        const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentMethodModal'));
+        paymentModal.hide();
+        
+        if (method === 'cod') {
+            // Process Cash on Delivery order
+            processCodOrder();
+        } else if (method === 'card') {
+            // Check if user has saved payment methods
+            const paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [];
+            
+            // Find default payment method
+            const defaultMethod = paymentMethods.find(method => method.isDefault);
+            
+            if (paymentMethods.length > 0) {
+                if (defaultMethod) {
+                    // Use default payment method
+                    processCardOrder(defaultMethod);
+                } else {
+                    // Use first payment method
+                    processCardOrder(paymentMethods[0]);
                 }
+            } else {
+                // No saved payment methods, show a modal to add one or use PayPal
+                showAddPaymentMethodModal();
+            }
+        }
+    });
+});
+
+// Function to process order with saved card
+function processCardOrder(paymentMethod) {
+    showNotification(`Processing payment with card ending in ${paymentMethod.cardNumber.slice(-4)}...`, 'success');
+    
+    setTimeout(() => {
+        // Generate order number
+        const orderNumber = 'UT' + Date.now().toString().substring(5);
+        
+        // Save order to user's orders
+        saveOrderToUserHistory(orderNumber, 'Credit/Debit Card');
+        
+        // Show confirmation modal
+        const confirmationOrderNumber = document.getElementById('confirmationOrderNumber');
+        confirmationOrderNumber.textContent = orderNumber;
+        
+        const confirmationModal = new bootstrap.Modal(document.getElementById('orderConfirmationModal'));
+        confirmationModal.show();
+        
+        // Clear cart
+        cart = [];
+        saveCart();
+        updateCartUI();
+        
+        // If on cart page, update cart display
+        const cartItemsList = document.getElementById('cartItemsList');
+        if (cartItemsList) {
+            cartItemsList.innerHTML = `
+                <div class="text-center py-5 empty-cart-message">
+                    <i class="bi bi-cart-x display-1 text-muted"></i>
+                    <h4 class="mt-3">Your cart is empty</h4>
+                    <p class="text-muted">Looks like you haven't added anything to your cart yet.</p>
+                    <a href="product.html" class="btn btn-primary mt-3">Browse Products</a>
+                </div>
+            `;
+            
+            // Update summary
+            const cartItemCount = document.getElementById('cartItemCount');
+            const orderSubtotal = document.getElementById('orderSubtotal');
+            const orderShipping = document.getElementById('orderShipping');
+            const orderTax = document.getElementById('orderTax');
+            const orderTotal = document.getElementById('orderTotal');
+            
+            if (cartItemCount) cartItemCount.textContent = '0';
+            if (orderSubtotal) orderSubtotal.textContent = '$0.00';
+            if (orderShipping) orderShipping.textContent = '$0.00';
+            if (orderTax) orderTax.textContent = '$0.00';
+            if (orderTotal) orderTotal.textContent = '$0.00';
+            
+            // Hide discount row if visible
+            const discountRow = document.querySelector('.discount-row');
+            if (discountRow) discountRow.classList.add('d-none');
+        }
+    }, 2000);
+}
+
+// Function to show add payment method modal
+function showAddPaymentMethodModal() {
+    // Create modal if it doesn't exist
+    if (!document.getElementById('checkoutAddPaymentModal')) {
+        const modalHTML = `
+            <div class="modal fade" id="checkoutAddPaymentModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Payment Method</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>You don't have any saved payment methods. Would you like to add one now or use PayPal checkout?</p>
+                            <form id="checkoutPaymentMethodForm">
+                                <div class="mb-3">
+                                    <label for="checkoutCardName" class="form-label">Name on Card</label>
+                                    <input type="text" class="form-control" id="checkoutCardName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="checkoutCardNumber" class="form-label">Card Number</label>
+                                    <input type="text" class="form-control" id="checkoutCardNumber" placeholder="1234 5678 9012 3456" required>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-md-6 mb-3 mb-md-0">
+                                        <label for="checkoutCardExpiry" class="form-label">Expiration Date</label>
+                                        <input type="text" class="form-control" id="checkoutCardExpiry" placeholder="MM/YY" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="checkoutCardCvc" class="form-label">CVC</label>
+                                        <input type="text" class="form-control" id="checkoutCardCvc" placeholder="123" required>
+                                    </div>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="checkoutDefaultPayment" checked>
+                                    <label class="form-check-label" for="checkoutDefaultPayment">
+                                        Set as default payment method
+                                    </label>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Save & Pay Now</button>
+                                    <button type="button" class="btn btn-outline-secondary" id="usePayPalInstead">Use PayPal Instead</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Append modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Handle payment method form submission
+        document.getElementById('checkoutPaymentMethodForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const cardName = document.getElementById('checkoutCardName').value;
+            const cardNumber = document.getElementById('checkoutCardNumber').value;
+            const cardExpiry = document.getElementById('checkoutCardExpiry').value;
+            const cardCvc = document.getElementById('checkoutCardCvc').value;
+            const isDefault = document.getElementById('checkoutDefaultPayment').checked;
+            
+            // Create payment method object
+            const paymentMethod = {
+                id: Date.now(),
+                cardName,
+                cardNumber: cardNumber.slice(-4).padStart(cardNumber.length, '*'),
+                cardExpiry,
+                isDefault
+            };
+            
+            // Get existing payment methods
+            let paymentMethods = JSON.parse(localStorage.getItem('paymentMethods')) || [];
+            
+            // If this is set as default, unset any existing default
+            if (isDefault) {
+                paymentMethods = paymentMethods.map(method => ({
+                    ...method,
+                    isDefault: false
+                }));
+            }
+            
+            // Add new payment method
+            paymentMethods.push(paymentMethod);
+            
+            // Save payment methods
+            localStorage.setItem('paymentMethods', JSON.stringify(paymentMethods));
+            
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('checkoutAddPaymentModal'));
+            modal.hide();
+            
+            // Process order with new payment method
+            processCardOrder(paymentMethod);
+        });
+        
+        // Handle "Use PayPal Instead" button
+        document.getElementById('usePayPalInstead').addEventListener('click', function() {
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('checkoutAddPaymentModal'));
+            modal.hide();
+            
+            // Scroll to PayPal button
+            document.getElementById('paypal-button-container').scrollIntoView({
+                behavior: 'smooth'
             });
         });
+    }
+    
+    // Show the modal
+    const addPaymentModal = new bootstrap.Modal(document.getElementById('checkoutAddPaymentModal'));
+    addPaymentModal.show();
+}
     }
     
     // Show the modal
